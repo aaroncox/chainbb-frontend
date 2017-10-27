@@ -55,7 +55,7 @@ class ForumManage extends React.Component {
         }
         let panes = [
             { menuItem: { key: 'overview', icon: 'cubes', color: 'black', content: 'Overview' }, render: () => <ForumOverview forum={forum} /> },
-            { menuItem: { key: 'funding', icon: 'payment', color: 'blue', content: 'Funding' }, render: () => <ForumUpgrade account={account} forum={forum} tier={tier} getTier={this.props.getTier} getTierFeatures={this.props.getTierFeatures}/> },
+            // { menuItem: { key: 'funding', icon: 'payment', color: 'blue', content: 'Funding' }, render: () => <ForumUpgrade account={account} forum={forum} tier={tier} getTier={this.props.getTier} getTierFeatures={this.props.getTierFeatures}/> },
             { menuItem: { key: 'permissions', icon: 'protect', color: 'purple', content: 'Permissions' }, render: () => <ForumPermissions forum={forum} tier={tier}/> },
             { menuItem: { key: 'configuration', icon: 'settings', color: 'orange', content: 'Configuration' }, render: () => <ForumConfigForm newForum={this.props.newForum} hideConfig={this.props.hideConfig}/> },
             { menuItem: { key: 'close', icon: 'window close', color: 'black', position: 'right' } },
