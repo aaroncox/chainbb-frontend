@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import App from './containers/app'
 import reducer from './reducers'
 
-import '../node_modules/semantic-ui/dist/semantic.min.css';
+import './semantic/dist/semantic.min.css';
 import './index.css'
 
 const target = document.getElementById('root')
