@@ -1,0 +1,6 @@
+.aws
+.boto
+
+build/
+scripts/
+node_modules/
