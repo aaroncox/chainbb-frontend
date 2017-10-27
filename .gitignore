@@ -2,5 +2,6 @@
 .boto
 
 build/
-scripts/
 node_modules/
+scripts/
+src/semantic
