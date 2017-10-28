@@ -117,17 +117,13 @@ class Sidebar extends React.Component {
     }
     return (
       <div>
+        {userMenu}
         <Menu vertical fluid color='blue' size='small'>
-          <Link className={`item ${(section && section === 'index') ? 'active' : ''}`} to='/'>
-            <Icon name='home' />
-            Forum Index
-          </Link>
           <Link className={`item ${(section && section === 'forums') ? 'active' : ''}`} to='/forums'>
             <Icon name='list layout' />
             All Forums
           </Link>
         </Menu>
-        {userMenu}
         {requestForum}
         {subscribedForums}
       </div>
