@@ -106,7 +106,7 @@ class Sidebar extends React.Component {
         <Menu vertical fluid color='blue' size='small'>
           <Link className={`item ${(section && section === 'feed') ? 'active' : ''}`} to='/feed'>
             <Icon name='users' />
-            Activity Feed
+            Feed
           </Link>
           <Link className={`item ${(section && section === 'replies') ? 'active' : ''}`} to={`/replies`}>
             <Icon name='inbox' />
