@@ -54,7 +54,8 @@ const App = () => (
         <BreadcrumbMenu />
         <GlobalNotice />
         <Container>
-          <Route exact path="/" component={IndexLayout} />
+          {/* <Route exact path="/" component={IndexLayout} /> */}
+          <Route exact path="/" component={ForumsLayout} />
           <Route path="/@:username" component={Account} />
           <Route path="/create/forum" component={ForumCreateLayout} />
           <Route path="/feed" component={FeedLayout} />
