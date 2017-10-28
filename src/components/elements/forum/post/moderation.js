@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Confirm, Dimmer, Grid, Header, Icon, Loader, Message, Modal, Segment } from 'semantic-ui-react'
+import { Button, Confirm, Dimmer, Divider, Grid, Header, Icon, Loader, Message, Modal, Segment } from 'semantic-ui-react'
 import Noty from 'noty'
 
 import ForumPostModerationStatus from './moderation/status'
@@ -181,6 +181,7 @@ export default class ForumPostModeration extends React.Component {
               forum={forum}
               topic={topic}
             />
+            <Divider hidden />
             <Grid divided='vertically'>
               {removeRestoreRow}
             </Grid>
