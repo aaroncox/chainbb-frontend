@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Header, Segment } from 'semantic-ui-react'
+import { Grid, Header, Icon, Segment } from 'semantic-ui-react'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router-dom'
 
@@ -39,7 +39,13 @@ export default class ForumIndex extends React.Component {
     }
     if(author) {
       latest_post = <Header size='tiny'>
-                      <UserAvatar username={author} />
+                      <UserAvatar
+                          username={author}
+                          style={{
+                              minHeight: '35px',
+                              marginBottom: '1em',
+                          }}
+                      />
                       <Link
                         to={`${url.split("#")[0]}`}
                         style={{
@@ -49,7 +55,7 @@ export default class ForumIndex extends React.Component {
                         }}>
                         {title}
                       </Link>
-                      <Header.Subheader>
+                      <Header.Subheader textAlign='right'>
                         {'↳ '}
                         <Link to={`${url}`}>
                           <TimeAgo date={`${created}Z`} />
@@ -69,27 +75,29 @@ export default class ForumIndex extends React.Component {
             >
             <Grid.Column computer={7} tablet={9} mobile={8}>
               <Header size='medium'>
-                {parent_forum}
-                <ForumLink forum={forum}/>
-                <Header.Subheader style={{marginTop: '0.1rem'}}>
+                <Icon color='blue' name='list' />
+                <Header.Content>
+                  <ForumLink forum={forum}/>
+                  <Header.Subheader style={{marginTop: '0.1rem'}}>
+                    {
+                      (forum.description)
+                        ? forum.description
+                        : ''
+                    }
+                  </Header.Subheader>
                   {
-                    (forum.description)
-                      ? <p>{'↳ '}{forum.description}</p>
-                      : ''
+                    (forum.children && forum.children.length > 0)
+                    ? (
+                      <Header.Subheader style={{marginTop: '0.1rem'}}>
+                        {forum.children.map((forum, i) => (<span key={i}>
+                          {!!i && " • "}
+                          <ForumLink forum={forum}/>
+                        </span>))}
+                      </Header.Subheader>
+                    )
+                    : ''
                   }
-                </Header.Subheader>
-                {
-                  (forum.children && forum.children.length > 0)
-                  ? (
-                    <Header.Subheader style={{marginTop: '0.1rem'}}>
-                      {forum.children.map((forum, i) => (<span key={i}>
-                        {!!i && " • "}
-                        <ForumLink forum={forum}/>
-                      </span>))}
-                    </Header.Subheader>
-                  )
-                  : ''
-                }
+                </Header.Content>
               </Header>
             </Grid.Column>
             <Grid.Column width={2} className='tablet or lower hidden' textAlign='center'>
