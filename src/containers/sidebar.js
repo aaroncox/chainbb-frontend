@@ -110,7 +110,7 @@ class Sidebar extends React.Component {
           </Link>
           <Link className={`item ${(section && section === 'replies') ? 'active' : ''}`} to={`/replies`}>
             <Icon name='inbox' />
-            Post Replies
+            Inbox
           </Link>
         </Menu>
       )

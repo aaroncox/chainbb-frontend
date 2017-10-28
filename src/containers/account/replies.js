@@ -20,21 +20,21 @@ class Replies extends React.Component {
 
   constructor(props) {
     super(props)
-    const { post } = props;
-    this.changePage = this.changePage.bind(this);
-    const user = props.account.name || false
-    if(user) {
-      this.props.actions.fetchPostRepliesByAuthor(user);
-      this.setState({user})
-    }
-    this.state = {
+    let state = {
       loaded: false,
       page: 1,
-      post,
+      post: props.post,
       replies: [],
       totalReplies: 0,
-      user
+      user: false
     }
+    const user = props.account.name || false
+    if(user) {
+      state.user = user
+      this.props.actions.fetchPostRepliesByAuthor(user);
+    }
+    this.state = state
+    this.changePage = this.changePage.bind(this);
   }
   changePage = (page) => {
     this.setState({
@@ -82,7 +82,7 @@ class Replies extends React.Component {
     return (
       <div>
         <Helmet>
-            <title>Post Replies</title>
+            <title>Inbox</title>
         </Helmet>
         <Segment stacked color='purple'>
           <Grid>
@@ -92,7 +92,7 @@ class Replies extends React.Component {
                   icon='inbox'
                   color='purple'
                   size='huge'
-                  content='Post Replies'
+                  content='Inbox'
                   subheader='The most recent replies to your posts.'
                 />
               </Grid.Column>
