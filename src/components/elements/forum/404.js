@@ -31,6 +31,25 @@ export default class Forum404 extends React.Component {
         </Button>
       )
     }
+    console.log(forum)
+    let tagUsage = false
+    if(!forum.exclusive) {
+        tagUsage = (
+            <div>
+                <Divider hidden></Divider>
+                <p>
+                    If you'd like to post to this forum from another Steem powered application, please make sure to use one of the following tags as the first tag in your post:
+                </p>
+                <List>
+                  {forum.tags.map((tag, i) => <List.Item key={i}>
+                    <Link to={`/topic/${tag}`}>
+                      #{tag}
+                    </Link>
+                  </List.Item>)}
+                </List>
+            </div>
+        )
+    }
     return (
       <Segment textAlign='center' padded='very'>
         <Header size='huge'>
@@ -38,19 +57,9 @@ export default class Forum404 extends React.Component {
           <Header.Subheader>
             <p>Be the first to create a post in this forum.</p>
             {button}
-            <Divider hidden></Divider>
-            <p>
-                If you'd like to post to this forum from another Steem powered application, please make sure to use one of the following tags as the first tag in your post:
-            </p>
+            {tagUsage}
           </Header.Subheader>
         </Header>
-        <List>
-          {forum.tags.map((tag, i) => <List.Item key={i}>
-            <Link to={`/topic/${tag}`}>
-              #{tag}
-            </Link>
-          </List.Item>)}
-        </List>
       </Segment>
     )
   }
