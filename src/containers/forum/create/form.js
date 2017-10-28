@@ -29,7 +29,7 @@ export default class ForumCreateForm extends React.Component {
                         <Message.Header>
                             This reservation <strong>will be valid for 1 hour</strong>.
                         </Message.Header>
-                        You will be responsible for completing the initial funding of this forum of 1 STEEM within one hour or the reservation will be cancelled automatically.
+                        The initial hosting fee of <strong>10 STEEM</strong> must be sent within one hour or the reservation will be cancelled automatically.
                     </Message.Content>
                 </Message>
                 <Segment>
@@ -62,7 +62,7 @@ export default class ForumCreateForm extends React.Component {
                     <Header>
                         Namespace
                         <Header.Subheader>
-                            This cannot be modified after the reservation. The namespace is used in URLs and is the primary ID of this forum. A valid namespace must a unique lowercase string made up of a combination of numbers, letters, and dashes.
+                            This cannot be modified after the reservation. The namespace is used in URLs and is the primary ID of this forum. A valid namespace must a unique lowercase string made up of a combination of numbers, letters, and dashes. This form will automatically try to generate a namespace as you type the forum name above.
                         </Header.Subheader>
                     </Header>
                     <Form.Input
@@ -85,17 +85,18 @@ export default class ForumCreateForm extends React.Component {
                     <p>
                         <strong>Unique URL</strong>: https://chainbb.com/f/{(namespace) ? namespace : suggestion}
                     </p>
-                    <Divider />
+                    {/* <Divider />
                     <Header>
                         Forum Creator
                         <Header.Subheader>
                             This account will be in control over any upgrades or moderation of this forum.
                         </Header.Subheader>
-                    </Header>
+                    </Header> */}
                     <Form.Input
-                        label='Forum Creator'
+                        type='hidden'
+                        // label='Forum Creator'
                         name='account'
-                        required
+                        // required
                         value={this.props.account.name}
                     />
                     {namespace_unavailable}

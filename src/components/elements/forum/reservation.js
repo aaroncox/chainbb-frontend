@@ -9,6 +9,7 @@ export default class ForumReservation extends React.Component {
         const { reservation, status } = this.props
         const { creator, expires, name, _id } = reservation
         const { sbd_median_price } = status.network
+        const forum_creation_cost = 10
         return (
             <div>
                 <Segment padded attached>
@@ -17,7 +18,7 @@ export default class ForumReservation extends React.Component {
                         <Header.Content>
                             Forum Namespace Reserved
                             <Header.Subheader>
-                                With the namespace reserved, now you can decide what type of forum this will become.
+                                With the namespace reserved, now you can now create the forum by confirming the reservation.
                             </Header.Subheader>
                         </Header.Content>
                     </Header>
@@ -39,7 +40,7 @@ export default class ForumReservation extends React.Component {
                                     <Header>
                                         Confirm this reservation and create the forum.
                                     </Header>
-                                    <p>If the details of this reservation look correct - complete the transaction below and send 1 STEEM to confirm your reservation.</p>
+                                    <p>If the details of this reservation look correct - complete the transaction below and send {forum_creation_cost} STEEM to confirm your reservation.</p>
                                     <Table definition verticalAlign='top'>
                                         <Table.Body>
                                             <Table.Row>
@@ -52,7 +53,7 @@ export default class ForumReservation extends React.Component {
                                             </Table.Row>
                                             <Table.Row>
                                                 <Table.Cell collapsing textAlign='right'>Amount</Table.Cell>
-                                                <Table.Cell>1 STEEM or {sbd_median_price * 1} SBD</Table.Cell>
+                                                <Table.Cell>{forum_creation_cost} STEEM or {sbd_median_price * forum_creation_cost} SBD</Table.Cell>
                                             </Table.Row>
                                             <Table.Row>
                                                 <Table.Cell collapsing textAlign='right'>Memo</Table.Cell>

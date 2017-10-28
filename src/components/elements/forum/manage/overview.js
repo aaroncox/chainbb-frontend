@@ -18,14 +18,13 @@ export default class ForumOverview extends React.Component {
             <div>
                 <Segment padded attached='top' secondary color='black'>
                     <Header size='large'>
-                        {target.name} - Forum Overview
+                        Forum Overview
                         <Header.Subheader>
                             Public information related to this forum and it's operations.
                         </Header.Subheader>
                     </Header>
                 </Segment>
                 <Segment attached>
-                    <Header>Current Forum Level: XXXX</Header>
                     <Table definition>
                         <Table.Header>
                             <Table.Row>

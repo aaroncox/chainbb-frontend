@@ -130,7 +130,7 @@ class ForumCreateButton extends React.Component {
                 closeIcon={true}
                 color='blue'
                 size='small'
-                trigger={ <Button color='purple'>Reserve Forum</Button> }
+                trigger={ <Button color='purple'>Reserve a Forum</Button> }
             >
                 <Segment basic style={{marginTop: 0}}>
                     <Dimmer active={processing}>
