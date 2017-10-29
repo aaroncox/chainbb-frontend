@@ -297,14 +297,21 @@ export function submit(account, data, parent, action = 'post') {
     let beneficiaries = [
       { "account": "chainbb", "weight": 1500 }
     ]
-    // If the forum is premium, add the creator as a beneficiary
+    // If the forum is funded, add the creator as a beneficiary
     if (data.forum && data.forum.target) {
         const { target } = data.forum
-        if(target.funded >= 250 && target.creator) {
-            beneficiaries = [
-                { "account": "chainbb", "weight": 1000 },
-                { "account": target.creator, "weight": 500},
-            ]
+        const chainbbPercent = 1500
+        const ownerPercent = 0
+        if(target.funded >= 2500) { ownerPercent = 500 } else
+        if(target.funded >= 1500) { ownerPercent = 400 } else
+        if(target.funded >= 1000) { ownerPercent = 300 } else
+        if(target.funded >= 500) { ownerPercent = 200 } else
+        if(target.funded >= 10) { ownerPercent = 100 }
+        beneficiaries = [
+            { "account": "chainbb", "weight": chainbbPercent - ownerPercent}
+        ]
+        if(ownerPercent > 0) {
+            beneficiaries.push({ "account": target.creator, "weight": ownerPercent})
         }
     }
     // The percentage overall (after platform splits) that the user receives - should be dynamic in the future
