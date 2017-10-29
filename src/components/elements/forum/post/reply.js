@@ -37,7 +37,7 @@ export default class ForumPostReply extends React.Component {
     return (
       <Grid>
         <Grid.Row verticalAlign='middle'>
-          <Grid.Column tablet={16} computer={16} mobile={16} style={{marginBottom: '2em'}}>
+          <Grid.Column tablet={16} computer={16} mobile={16}>
             <Segment style={{ borderTop: '2px solid #2185D0' }} secondary attached stacked={(this.props.op && this.props.page !== 1)}>
               <Grid>
                 <Grid.Row verticalAlign='top'>
