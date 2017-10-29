@@ -33,7 +33,6 @@ const App = () => (
             <title>chainBB</title>
             <meta name="description" content="Blockchain based decentralized forum software powered by the Steem blockchain." />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta charSet="utf-8" />
             <meta itemprop="name" content="chainBB Forums" />
             <meta itemprop="description" content="Blockchain based decentralized forum software powered by the Steem blockchain." />
             <meta itemprop="image" content="https://steemit-production-imageproxy-upload.s3.amazonaws.com/DQmckc76UaBZSicePvDG9dKwrgyS5GoZRxAnBZ8AzxtVwH8" />
