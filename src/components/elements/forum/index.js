@@ -13,6 +13,7 @@ export default class ForumIndex extends React.Component {
     const { forum, isMinimized, displayParent } = this.props
     let lastPost = (forum.last_post) ? (new Date(forum.last_post['created']).getTime()) : 0,
         lastReply = (forum.last_reply) ? (new Date(forum.last_reply['created']).getTime()) : 0,
+        highlight = (forum.highlight),
         newest = (lastPost > lastReply) ? 'last_post' : 'last_reply',
         { author, url, created, title } = (typeof forum[newest] === 'object') ? forum[newest] : {},
         latest_post = null,
@@ -67,7 +68,10 @@ export default class ForumIndex extends React.Component {
       <Segment
         attached
         key={forum._id}
-        style={{ display: isMinimized ? "none" : "" }}
+        style={{
+            background: highlight ? "#ececec" : "",
+            display: isMinimized ? "none" : ""
+        }}
         >
         <Grid>
           <Grid.Row
@@ -75,7 +79,7 @@ export default class ForumIndex extends React.Component {
             >
             <Grid.Column computer={7} tablet={9} mobile={8}>
               <Header size='medium'>
-                <Icon color='blue' name='list' />
+                <Icon color='blue' name={highlight ? 'pin' : 'list'} />
                 <Header.Content>
                   <ForumLink forum={forum}/>
                   <Header.Subheader style={{marginTop: '0.1rem'}}>
