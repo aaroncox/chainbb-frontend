@@ -49,13 +49,13 @@ class ForumCreate extends React.Component {
                         <Grid.Row>
                             <Grid.Column width={8}>
                                 <Header size='large'>
-                                    Steem Powered
+                                    Blockchain Powered
                                     <Header.Subheader>
                                         All data exists on the Steem blockchain
                                     </Header.Subheader>
                                 </Header>
                                 <p style={{fontSize: '1.33em'}}>
-                                    The chainBB forum engine is powered by the <a href='https://steem.io'>Steem</a> blockchain, which means your data is uncorruptable and permanant. Every post, vote and action you take within a chainBB forum happens on the blockchain. The forum and chainBB itself sit on the blockchain as a specialized app.
+                                    The chainBB forum engine is powered by the <a href='https://steem.io'>Steem</a> blockchain. This means your data is uncorruptable and forever permanant. Every post, vote, and action anyone takes within a chainBB forum happens on this blockchain. If the chainBB servers are ever corrupted, they can easily be rebuild by replaying the blockchain.
                                 </p>
                             </Grid.Column>
                             <Grid.Column width={6} floated='right'>
@@ -67,13 +67,13 @@ class ForumCreate extends React.Component {
                         <Grid.Row>
                             <Grid.Column width={8}>
                                 <Header size='large'>
-                                    Forum Hosting
+                                    Dedicated Hosting
                                     <Header.Subheader>
-                                        Hosted on chainBB.com
+                                        Hosting provided by chainBB.com
                                     </Header.Subheader>
                                 </Header>
                                 <p style={{fontSize: '1.33em'}}>
-                                    Forums created on chainBB are indexed within the dedicated infrastructure tailored specifically for this purpose.  No need to setup your own server or run your own software.
+                                    Forums created on chainBB.com are indexed within the dedicated infrastructure tailored specifically for this purpose.  No need to setup your own server or run your own software.
                                 </p>
                             </Grid.Column>
                             <Grid.Column width={6} floated='right'>
@@ -105,7 +105,7 @@ class ForumCreate extends React.Component {
                                     </Header.Subheader>
                                 </Header>
                                 <p style={{fontSize: '1.33em'}}>
-                                    Each chainBB forum also includes a portion of the beneficary rewards going to the creator of the forum, giving everyone an incentive to build their community. This percentage starts at 1% and increases depdening on the performance of the forum.
+                                    Each chainBB forum also includes a portion of the beneficary rewards going to the creator of the forum, giving owners an incentive to build their community. This percentage starts at 1% and increases depdening on the performance of the forum.
                                 </p>
                             </Grid.Column>
                             <Grid.Column width={6} floated='right'>
