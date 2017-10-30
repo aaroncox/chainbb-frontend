@@ -12,7 +12,7 @@ import ForumPostModeration from './post/moderation'
 export default class ForumPost extends React.Component {
   constructor(props) {
     super(props)
-    const hasModeration = (props && props.tier) ? props.tier.moderation : false
+    const hasModeration = (props && props.forum && props.forum.funded >= 1) ? true : false
     const isModerator = hasModeration && (props && props.account && props.account.isUser && props.account.name === props.forum.creator)
     this.state = {
       isModerator: isModerator,
