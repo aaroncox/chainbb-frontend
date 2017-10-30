@@ -31,7 +31,6 @@ export default class Forum404 extends React.Component {
         </Button>
       )
     }
-    console.log(forum)
     let tagUsage = false
     if(!forum.exclusive) {
         tagUsage = (

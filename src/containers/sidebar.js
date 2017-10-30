@@ -28,7 +28,6 @@ class Sidebar extends React.Component {
             </p>
         </Segment>
     )
-    requestForum = false // Disable for now
     let subscribedForums = false
         // ,
         // categories = (
