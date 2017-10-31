@@ -10,8 +10,6 @@ export default function subscriptions(state = false, action) {
   const { forum } = action
   if(forum) {
     const id = forum._id || forum
-    console.log(id)
-    console.log(forum)
     const newState = Object.assign({}, state)
     const forums = newState.forums
     switch(action.type) {
