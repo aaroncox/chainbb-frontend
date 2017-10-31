@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Divider, Grid, Header, Segment, Table } from 'semantic-ui-react'
+import { Divider, Grid, Header, Message, Segment, Table } from 'semantic-ui-react'
 
 import ForumUpgradeHistory from './upgrade/history'
 import ForumUpgradeMeter from './upgrade/meter'
@@ -23,6 +23,11 @@ export default class ForumUpgrade extends React.Component {
                     </Header>
                 </Segment>
                 <Segment attached padded>
+                    <Message
+                        warning
+                        title='This system is in development.'
+                        content='The upgrades system is still in development and beneficiaries will not be displayed/counted yet. Once this is and beneficiaries are recording (about one week), that data will be accounted for here.'
+                    />
                     <Grid>
                         <Grid.Row columns={2}>
                             <Grid.Column>
