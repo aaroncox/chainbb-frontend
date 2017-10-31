@@ -8,7 +8,7 @@ export default class ForumSubscribe extends React.Component {
   render() {
     const { isUser, forum } = this.props
     if(!isUser) return false
-    const isSubscribed = (this.props.subscriptions && this.props.subscriptions.hasOwnProperty((forum) ? forum._id : false))
+    const isSubscribed = (this.props.subscriptions && this.props.subscriptions.hasOwnProperty((forum) ? forum : false))
     if(isSubscribed) {
       return (
           <Popup

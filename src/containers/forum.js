@@ -134,6 +134,7 @@ class Forum extends React.Component {
   setProgression = (forum) => {
       const { increment, steps } = GLOBAL.PROGRESSION
       const initialCost = 10
+      if (!forum) return forum
       let { funded } = forum
       if (!funded) funded = 0
     //   funded = 14.05
