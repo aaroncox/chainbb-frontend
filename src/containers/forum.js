@@ -28,44 +28,7 @@ import ForumPost from '../components/elements/forum/post'
 import PostForm from './post/form'
 import PostFormHeader from '../components/elements/post/form/header'
 
-const tiers = [
-    {
-        bounds: [0, 0.999],
-        moderation: false,
-        name: 'Reservation',
-        features: [
-
-        ],
-    },
-    {
-        bounds: [1, 49.999],
-        moderation: false,
-        name: 'Basic Forum',
-        features: [
-            'chainBB.com Hosting',
-            'Users can post + vote',
-            'Unique namespace and URL',
-        ],
-    },
-    {
-        bounds: [50, 249.999],
-        moderation: true,
-        name: 'Moderated Forum',
-        features: [
-            'Moderation controls for forum creator.'
-        ],
-    },
-    {
-        bounds: [250, 99999],
-        moderation: true,
-        name: 'Premium Forum',
-        features: [
-            '5% Beneficiary Rewards for forum creator.'
-        ],
-    },
-]
-
-const configSections = ['overview', 'funding', 'permissions', 'configuration']
+const configSections = ['overview', 'upgrades', 'permissions', 'configuration']
 
 class Forum extends React.Component {
   constructor(props, state) {
@@ -79,7 +42,7 @@ class Forum extends React.Component {
       topics: false,
       filter: (hash) ? hash : false,
       newForum: false,
-      showConfig: (['overview', 'funding', 'permissions', 'configuration'].indexOf(props.section) >= 0) ? true : false,
+      showConfig: (['overview', 'upgrades', 'permissions', 'configuration'].indexOf(props.section) >= 0) ? true : false,
       showNewPost: false,
       showModerated: false,
       showSubforums: false,
@@ -164,8 +127,48 @@ class Forum extends React.Component {
   }
 
   setForum = (forum) => {
+      forum = this.setProgression(forum)
       this.setState({forum})
       this.props.actions.setForum(forum)
+  }
+  setProgression = (forum) => {
+      const { increment, steps } = GLOBAL.PROGRESSION
+      const initialCost = 10
+      let { funded } = forum
+      if (!funded) funded = 0
+    //   funded = 14.05
+    //   forum['funded'] = funded
+      let current = funded
+      let level = 0
+      let required = 0
+      let previous = 0
+      let progress = 0
+      let split = 100
+      let next = false
+      for (var i = 0, len = steps.length; i < len; i++) {
+          // Storing progression into current level
+          progress = Math.floor((funded - (initialCost + previous)) * 1000) / 1000
+          // If the funding is greater than the next level + 10 (initial creation)
+          if(funded >= steps[i] + initialCost) {
+              level = i
+              split += increment
+            //   progress = steps[i] + initialCost
+          } else {
+              next = steps[i] + initialCost
+              required = Math.floor((steps[i] - previous) * 1000) / 1000
+              break
+          }
+          previous = steps[i]
+      }
+      forum['progression'] = {
+          current,
+          level,
+          next,
+          progress,
+          required,
+          split,
+      }
+      return forum
   }
   setBreadcrumb = (result) => {
       if (result.forum) {
@@ -278,24 +281,9 @@ class Forum extends React.Component {
     });
     this.setState({topics})
   }
-  getTier(funded) {
-      if(!funded) funded = 0
-      return tiers.filter((tier) => {
-          return (funded >= tier.bounds[0] && funded < tier.bounds[1])
-      }).pop()
-  }
-  getTierFeatures(funded) {
-      if(!funded) funded = 0
-      return [].concat.apply([], (tiers.filter((tier) => {
-          return (funded >= tier.bounds[0])
-      }).map((tier) => {
-          return tier.features
-      })))
-  }
   render() {
     let account = this.props.account,
         forum = this.state.forum,
-        tier = (forum) ? this.getTier(forum.funded) : this.getTier(0),
         reservation = this.state.reservation,
         children = this.state.children,
         controls = false,
@@ -363,13 +351,11 @@ class Forum extends React.Component {
             display = (
                 <ForumManage
                     account={account}
+                    hideConfig={this.hideConfig.bind(this)}
                     forum={forum}
                     newForum={this.state.newForum}
-                    getTier={this.getTier.bind(this)}
-                    getTierFeatures={this.getTierFeatures.bind(this)}
-                    hideConfig={this.hideConfig.bind(this)}
-                    tier={tier}
                     section={this.props.section}
+                    target={this.state.forum}
                 />
             )
           } else if(this.state.showNewPost) {
@@ -405,7 +391,6 @@ class Forum extends React.Component {
                         actions={this.props.actions}
                         changeFilter={this.changeFilter.bind(this)}
                         forum={forum}
-                        tier={tier}
                         key={idx}
                         moderation={this.props.moderation}
                         topic={topic}
@@ -485,8 +470,7 @@ class Forum extends React.Component {
       <div>
         {meta}
         <ForumTitle
-            active={this.state.filter}
-            tier={tier || {}}
+          active={this.state.filter}
           forum={forum || reservation}
           account={account}
           attached={(subforums) ? 'top' : false}

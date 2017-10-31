@@ -49,15 +49,15 @@ class ForumManage extends React.Component {
         return indexes.indexOf(key)
     }
     render() {
-        const { account, forum, tier, reservation } = this.props
+        const { account, forum, reservation, target } = this.props
         if (reservation) {
             return <ForumReservation status={this.props.status} reservation={reservation} />
         }
         let panes = [
             { menuItem: { key: 'overview', icon: 'cubes', color: 'black', content: 'Overview' }, render: () => <ForumOverview forum={forum} /> },
-            { menuItem: { key: 'permissions', icon: 'protect', color: 'purple', content: 'Permissions' }, render: () => <ForumPermissions forum={forum} tier={tier}/> },
+            { menuItem: { key: 'permissions', icon: 'protect', color: 'purple', content: 'Permissions' }, render: () => <ForumPermissions forum={forum} /> },
             { menuItem: { key: 'configuration', icon: 'settings', color: 'orange', content: 'Configuration' }, render: () => <ForumConfigForm newForum={this.props.newForum} hideConfig={this.props.hideConfig}/> },
-            { menuItem: { key: 'funding', icon: 'payment', color: 'blue', content: 'Funding' }, render: () => <ForumUpgrade account={account} forum={forum} tier={tier} getTier={this.props.getTier} getTierFeatures={this.props.getTierFeatures}/> },
+            { menuItem: { key: 'upgrades', icon: 'arrow circle up', color: 'blue', content: 'Upgrades' }, render: () => <ForumUpgrade account={account} forum={forum} target={target} /> },
             { menuItem: { key: 'close', icon: 'window close', color: 'black', position: 'right' } },
         ]
         let display = (
