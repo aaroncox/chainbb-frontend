@@ -94,7 +94,7 @@ export default class ForumTitle extends React.Component {
                     <Menu.Menu position='right'>
                         <Menu.Item>
                             <ForumSubscribe
-                              forum={this.props.forum || this.props.forumid}
+                              forum={this.props.forum}
                               isUser={this.props.account.isUser}
                               subscriptions={this.props.subscriptions.forums}
                               onSubscribe={this.props.actions.forumSubscribe}
