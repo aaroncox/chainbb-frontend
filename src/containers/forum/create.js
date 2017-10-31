@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { Divider, Grid, Header, Image, Message, Segment, Table } from 'semantic-ui-react'
 
@@ -24,12 +25,16 @@ class ForumCreate extends React.Component {
                     </Header>
                 </Segment>
                 <Divider />
-                <Segment padded basic textAlign='center'>
+                <Segment padded basic>
+                    <Message
+                        header='Notice - features/costs subject to change'
+                        content='These forums are currently in beta and the information on this page is subject to change.'
+                    />
                     <p style={{fontSize: '1.33em'}}>
-                        Forums have a <strong>10 STEEM</strong> initial creation fee. No other fees are required after this amount and the hosting costs of the forum are covered by the beneficary rewards generated though posting activity.
+                        Forums have a <strong>10 STEEM</strong> initial creation fee. No other fees are required after this. The hosting and upgrade costs of the forum are increased by the beneficary rewards generated though activity within the forum itself.
                     </p>
-                    <p style={{fontSize: '1.33em'}}>
-                        To get started, make a forum name reservation using the button below, while logged into the account that will be the forum owner.
+                    <p>
+                        To get started, make sure you are logged into the account that will be the forum owner and make a reservation using the button below.
                     </p>
                     <ForumCreateButton />
                 </Segment>
@@ -108,43 +113,8 @@ class ForumCreate extends React.Component {
                                     Each chainBB forum also includes a portion of the beneficary rewards going to the creator of the forum, giving owners an incentive to build their community. This percentage starts at 1% and increases depdening on the performance of the forum.
                                 </p>
                             </Grid.Column>
-                            <Grid.Column width={6} floated='right'>
-                                <Table definition>
-                                    <Table.Header>
-                                        <Table.Row>
-                                            <Table.HeaderCell textAlign='right'>Post Rewards</Table.HeaderCell>
-                                            <Table.HeaderCell textAlign='center'>Creator</Table.HeaderCell>
-                                            <Table.HeaderCell textAlign='center'>chainBB</Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Header>
-                                    <Table.Body>
-                                        <Table.Row>
-                                            <Table.Cell textAlign='right'>Base</Table.Cell>
-                                            <Table.Cell textAlign='center'>1%</Table.Cell>
-                                            <Table.Cell textAlign='center'>14%</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell textAlign='right'>500</Table.Cell>
-                                            <Table.Cell textAlign='center'>2%</Table.Cell>
-                                            <Table.Cell textAlign='center'>13%</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell textAlign='right'>1500</Table.Cell>
-                                            <Table.Cell textAlign='center'>3%</Table.Cell>
-                                            <Table.Cell textAlign='center'>12%</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell textAlign='right'>2000</Table.Cell>
-                                            <Table.Cell textAlign='center'>4%</Table.Cell>
-                                            <Table.Cell textAlign='center'>11%</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell textAlign='right'>2500</Table.Cell>
-                                            <Table.Cell textAlign='center'>5%</Table.Cell>
-                                            <Table.Cell textAlign='center'>10%</Table.Cell>
-                                        </Table.Row>
-                                    </Table.Body>
-                                </Table>
+                            <Grid.Column width={6} floated='right' textAlign='center'>
+                                <Image size='large' src='/images/create/rewards.png' bordered as={Link} to='/images/create/rewards.png' target='_blank' />
                                 <small>
                                     * Percentages are subject to change while in beta
                                 </small>
