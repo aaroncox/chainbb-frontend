@@ -54,7 +54,7 @@ export default class ForumUpgrade extends React.Component {
                                         </Table.Row>
                                         <Table.Row>
                                             <Table.Cell>Amount to Advance</Table.Cell>
-                                            <Table.Cell>{next - current} STEEM</Table.Cell>
+                                            <Table.Cell>{Math.round((next - current) * 1000)/1000} STEEM</Table.Cell>
                                         </Table.Row>
                                     </Table.Body>
                                 </Table>
