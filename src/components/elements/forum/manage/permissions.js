@@ -6,7 +6,7 @@ import AccountLink from '../../account/link'
 
 export default class ForumPermissions extends React.Component {
     render() {
-        const { forum, tier } = this.props
+        const { forum } = this.props
         const { target } = forum
         return(
             <div>
@@ -55,10 +55,7 @@ export default class ForumPermissions extends React.Component {
                     <Table.Body>
                         <Table.Row>
                             <Table.Cell collapsing>
-                                {(tier && tier.moderation)
-                                    ? <Icon color='green' name='checkmark' />
-                                    : <Icon color='red' name='close' />
-                                }
+                                <Icon color='green' name='checkmark' />
                             </Table.Cell>
                             <Table.Cell>
                                 <AccountLink username={target.creator} />
@@ -66,8 +63,6 @@ export default class ForumPermissions extends React.Component {
                         </Table.Row>
                     </Table.Body>
                 </Table>
-
-
             </div>
         );
     }
