@@ -9,13 +9,16 @@ export default function subscriptions(state = false, action) {
   }
   const { forum } = action
   if(forum) {
+    const id = forum._id || forum
+    console.log(id)
+    console.log(forum)
     const newState = Object.assign({}, state)
     const forums = newState.forums
     switch(action.type) {
       case types.FORUM_SUBSCRIBE:
-        if(!forums.hasOwnProperty(forum)) {
-          forums[forum] = {
-            id: forum,
+        if(!forums.hasOwnProperty(id)) {
+          forums[id] = {
+            id,
             name: forum['name'],
             parent: forum['parent'],
             parent_name: forum['parent_name'],
@@ -24,8 +27,8 @@ export default function subscriptions(state = false, action) {
         store.set('subscriptions', newState)
         return newState
       case types.FORUM_UNSUBSCRIBE:
-        if(forums.hasOwnProperty(forum)) {
-          delete forums[forum]
+        if(forums.hasOwnProperty(id)) {
+          delete forums[id]
         }
         store.set('subscriptions', newState)
         return newState
