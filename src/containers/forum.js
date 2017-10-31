@@ -379,6 +379,7 @@ class Forum extends React.Component {
                 elements={['body', 'rewards', 'title', 'tags']}
                 onCancel={this.hideNewPost}
                 onComplete={this.handleNewPost}
+                target={this.state.forum}
                 { ... this.props } />
             )
           } else {

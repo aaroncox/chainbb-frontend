@@ -301,12 +301,7 @@ export function submit(account, data, parent, action = 'post') {
     if (data.forum && data.forum.target) {
         const { target } = data.forum
         const chainbbPercent = 1500
-        const ownerPercent = 0
-        if(target.funded >= 2500) { ownerPercent = 500 } else
-        if(target.funded >= 1500) { ownerPercent = 400 } else
-        if(target.funded >= 1000) { ownerPercent = 300 } else
-        if(target.funded >= 500) { ownerPercent = 200 } else
-        if(target.funded >= 10) { ownerPercent = 100 }
+        const ownerPercent = target.progression.split
         beneficiaries = [
             { "account": "chainbb", "weight": chainbbPercent - ownerPercent}
         ]
