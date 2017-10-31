@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Divider, Grid, Header, Message, Segment, Table } from 'semantic-ui-react'
+import { Divider, Grid, Header, Input, Message, Segment, Table } from 'semantic-ui-react'
 
 import ForumUpgradeHistory from './upgrade/history'
 import ForumUpgradeMeter from './upgrade/meter'
@@ -23,11 +23,6 @@ export default class ForumUpgrade extends React.Component {
                     </Header>
                 </Segment>
                 <Segment attached padded>
-                    <Message
-                        warning
-                        title='This system is in development.'
-                        content='The upgrades system is still in development and beneficiaries will not be displayed/counted yet. Once this is and beneficiaries are recording (about one week), that data will be accounted for here.'
-                    />
                     <Grid>
                         <Grid.Row columns={2}>
                             <Grid.Column>
@@ -64,6 +59,68 @@ export default class ForumUpgrade extends React.Component {
                                     </Table.Body>
                                 </Table>
 
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                    <Message
+                        warning
+                        title='This system is in development.'
+                        content='The upgrades system is still in development and beneficiaries will not be displayed/counted yet. Once this is and beneficiaries are recording (about one week), that data will be accounted for here.'
+                    />
+                </Segment>
+                <Segment padded secondary attached>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={10}>
+                                <Header>
+                                    How do forum upgrades work?
+                                </Header>
+                                <p style={{fontSize: '1.33em'}}>
+                                    A chainBB forum organically upgrades based on the communities usage of it (via beneficiary rewards). As a forum's contribution increases, so does the percentage share of the rewards it generates. These upgrades can also be fast-tracked by it's users by manually funding the forum.
+                                </p>
+                                <p>
+                                    This value increases and decreases over time and is currently for an unspecified timeframe. This value will be finalized within the first 30 days or so of it's launch, and is expected to be a timeframe somewhere between 30-90 days.
+                                </p>
+                            </Grid.Column>
+                            <Grid.Column width={6} verticalAlign='bottom'>
+                                <p>
+                                    To contribute to the upgrades of this forum, complete the following transfer.
+                                </p>
+                                <Table definition verticalAlign='top'>
+                                    <Table.Body>
+                                        <Table.Row>
+                                            <Table.Cell collapsing textAlign='right'>From</Table.Cell>
+                                            <Table.Cell>
+                                                (any account)
+                                            </Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell collapsing textAlign='right'>To</Table.Cell>
+                                            <Table.Cell>
+                                                <a href='https://steemd.com/@chainbb'>
+                                                    @chainbb
+                                                </a>
+                                            </Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell collapsing textAlign='right'>Amount</Table.Cell>
+                                            <Table.Cell>
+                                                (any amount)
+                                            </Table.Cell>
+                                        </Table.Row>
+                                        <Table.Row>
+                                            <Table.Cell collapsing textAlign='right'>Memo</Table.Cell>
+                                            <Table.Cell>
+                                                <Input type='text' value={`ns:${target._id}`} />
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    </Table.Body>
+                                </Table>
+                                <p>
+                                    <small>
+                                        <strong>Notice</strong>: Failure to specify the memo exactly as above will cause the transfer to fail.
+                                    </small>
+                                </p>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
