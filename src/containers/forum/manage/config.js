@@ -59,6 +59,9 @@ class ForumConfigForm extends React.Component {
                             processing: false,
                             awaitingBlock: true,
                         })
+                        if(this.props.newForum) {
+                            this.props.history.push(`/f/${this.props.forumid}`);
+                        }
                         this.timeout = setTimeout(() => {
                             this.setState({
                                 showConfirm: false,
