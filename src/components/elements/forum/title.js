@@ -43,9 +43,9 @@ export default class ForumTitle extends React.Component {
         return (
             <div>
                 <Segment attached='top' color='blue' inverted stacked>
-                    <Grid>
-                        <Grid.Row columns={2}>
-                            <Grid.Column>
+                    <Grid stackable>
+                        <Grid.Row>
+                            <Grid.Column width={14}>
                                 <Header size='huge' key={(forum) ? forum._id : 'unknown'} style={{color: 'white'}}>
                                     <Icon name='list' />
                                     <Header.Content>
@@ -64,14 +64,20 @@ export default class ForumTitle extends React.Component {
                                     </Header.Content>
                                 </Header>
                             </Grid.Column>
-                            <Grid.Column>
-                                <Button
-                                    disabled={!forum}
-                                    size='large'
-                                    floated='right'
-                                    icon='cubes'
-                                    color='blue'
-                                    onClick={this.props.showConfig}
+                            <Grid.Column width={2}>
+                                <Popup
+                                  trigger={
+                                      <Button
+                                          rounded
+                                          disabled={!forum}
+                                          size='large'
+                                          floated='right'
+                                          icon='cubes'
+                                          onClick={this.props.showConfig}
+                                      />
+                                  }
+                                  content='Forum Information'
+                                  inverted
                                 />
                             </Grid.Column>
                         </Grid.Row>
