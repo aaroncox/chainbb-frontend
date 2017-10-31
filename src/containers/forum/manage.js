@@ -2,7 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { withRouter } from "react-router-dom";
-import { Header, Icon, Segment, Tab } from 'semantic-ui-react'
+import { Button, Header, Icon, Segment, Tab } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 import AccountLink from '../../components/elements/account/link'
 import ForumConfigForm from './manage/config'
@@ -94,7 +95,20 @@ class ForumManage extends React.Component {
                 />
             )
         }
-        return display
+        return (
+            <div>
+                {display}
+                <Segment basic textAlign='center'>
+                    <Button
+                        as={Link}
+                        to={`/f/${(forum && forum.target) ? forum.target._id : 'unknown'}`}
+                        content='Return to Forum'
+                        size='small'
+                        color='blue'
+                    />
+                </Segment>
+            </div>
+        )
     }
 }
 
