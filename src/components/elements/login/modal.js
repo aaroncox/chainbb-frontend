@@ -93,11 +93,9 @@ export default class LoginModal extends React.Component {
         size='small'
         className='modal-warning'
       >
-        <Header icon='warning' content='Fair warning: This is beta software' />
+        <Header icon='warning' content='Please use your use your keys responsibly.' />
         <Modal.Content>
-          <h3>Please use your use your keys responsibly.</h3>
-          <h5>This is beta software and you use it at your own risk. Please ensure you are only using your posting key within the site to ensure your account balance is safe.</h5>
-          {/*<p>For more information and best practices, please <Link to='#' rel='nofollow' target='_blank'>read our post about security and your keys</Link>.</p>*/}
+          <h4>As with all Steem powered applications, please be aware of what website you're on and if you trust the organization running it. Make sure you are only using your posting key and your active/owner keys remain safe (preferrably in a wallet or offline).</h4>
         </Modal.Content>
         <Modal.Actions>
           <Button color='orange' onClick={this.handleClose}>Cancel</Button>
@@ -116,9 +114,9 @@ export default class LoginModal extends React.Component {
             <Message>
               <Message.Header>Before you login, please note:</Message.Header>
               <Message.List>
-                <Message.Item>chainBB uses Steem&lsquo;s Post Beneficiaries feature to support itself, at a rate of 15% on all posts created.</Message.Item>
-                <Message.Item>chainBB will only accept posting keys (WIF) for login, which are currently stored unencrypted in local storage.</Message.Item>
-                <Message.Item>chainBB is currently in <strong>BETA</strong> and still may contain bugs.</Message.Item>
+                <Message.Item>chainBB uses Steem&lsquo;s Post Beneficiaries feature at 15% of all posts. This reward is split between the users who operate the forums and the chainBB development team.</Message.Item>
+                <Message.Item>You can login to chainBB using your Steem posting key (WIF format, starts with the number 5). These keys are currently stored unencrypted in your browser and used for posting and voting.</Message.Item>
+                <Message.Item>chainBB is currently in <strong>BETA</strong> and may contain bugs.</Message.Item>
               </Message.List>
             </Message>
             <Form
