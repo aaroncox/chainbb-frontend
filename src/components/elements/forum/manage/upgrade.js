@@ -79,7 +79,7 @@ export default class ForumUpgrade extends React.Component {
                                     A chainBB forum organically upgrades based on the communities usage of it (via beneficiary rewards). As a forum's contribution increases, so does the percentage share of the rewards it generates. These upgrades can also be fast-tracked by it's users by manually funding the forum.
                                 </p>
                                 <p>
-                                    This value increases and decreases over time and is currently for an unspecified timeframe. This value will be finalized within the first 30 days or so of it's launch, and is expected to be a timeframe somewhere between 30-90 days.
+                                    This system is still being established and at a point in the future, a system to decay/decrease rewards over time will also be introduced (to combat inactive forums and squatting). The goal isn't to punish or discourage forum operators, but to ensure the forums that exist here are contributing to the chainBB ecosystem.
                                 </p>
                             </Grid.Column>
                             <Grid.Column width={6} verticalAlign='bottom'>
