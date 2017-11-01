@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Divider, Grid, Header, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Segment } from 'semantic-ui-react'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router-dom'
 import PlatformLink from '../../../../utils/link/platform'

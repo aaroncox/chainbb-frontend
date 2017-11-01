@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { Divider, Grid, Header, Image, Message, Segment, Table } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 import * as accountActions from '../../actions/accountActions'
 import * as forumActions from '../../actions/forumActions'

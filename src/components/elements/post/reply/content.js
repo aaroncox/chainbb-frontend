@@ -9,8 +9,6 @@ import MarkdownViewer from '../../../../utils/MarkdownViewer';
 import PostControls from '../controls'
 import PostForm from '../../../../containers/post/form'
 import PostFormHeader from '../form/header'
-import PlatformLink from '../../../../utils/link/platform'
-import TimeAgo from 'react-timeago'
 import UserAvatar from '../../account/avatar'
 import AccountLink from '../../account/link'
 
