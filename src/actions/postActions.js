@@ -288,11 +288,13 @@ export function submit(account, data, parent, action = 'post') {
     const parent_author = (data.existingPost) ? data.existingPost.parent_author : (parent) ? parent.author : ''
     const parent_permlink = (data.existingPost) ? data.existingPost.parent_permlink : (parent) ? parent.permlink : data.category
     // JSON to append to the post
-    const json_metadata = JSON.stringify({
+    const meta = {
       app: 'chainbb/0.4',
+      namespace: namespace,
       format: 'markdown+html',
       tags: data.tags
-    })
+    }
+    const json_metadata = JSON.stringify(meta)
     // Predefined beneficiaries for the platform
     let beneficiaries = [
       { "account": "chainbb", "weight": 1500 }
