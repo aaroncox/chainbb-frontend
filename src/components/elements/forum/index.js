@@ -10,33 +10,19 @@ import ForumLink from '../../../utils/forumlink'
 
 export default class ForumIndex extends React.Component {
   render() {
-    const { forum, isMinimized, displayParent } = this.props
+    const { forum, isMinimized } = this.props
     let lastPost = (forum.last_post) ? (new Date(forum.last_post['created']).getTime()) : 0,
         lastReply = (forum.last_reply) ? (new Date(forum.last_reply['created']).getTime()) : 0,
         highlight = (forum.highlight),
         newest = (lastPost > lastReply) ? 'last_post' : 'last_reply',
         { author, url, created, title } = (typeof forum[newest] === 'object') ? forum[newest] : {},
         latest_post = null,
-        parent_forum = null,
         numberFormat = {
           shortFormat: true,
           shortFormatMinValue: 1000
         }
     if(title && title.length > 100) {
       title = title.substring(0, 100) + " ..."
-    }
-    if(displayParent) {
-      parent_forum = (
-        <Header.Subheader style={{marginTop: '0.1rem'}}>
-          Forums
-          {(forum.parent)
-            ? ' / '
-            : ' '}
-          <Link to={`/f/${forum.parent}`}>
-            {forum.parent_name}
-          </Link>
-        </Header.Subheader>
-      )
     }
     if(author) {
       latest_post = <Header size='tiny'>
