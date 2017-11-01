@@ -1,4 +1,5 @@
 import * as types from '../actions/actionTypes';
+import * as ForumReducer from './forum';
 
 const initialState = {
   forum: false,
@@ -49,6 +50,11 @@ export default function post(state = initialState, action) {
     case types.POST_LOAD_REPLIES_BY_AUTHOR_RESOLVED:
       let { replies, totalReplies } = action.payload;
       authors[action.payload.account] = { replies, totalReplies };
+      authors[action.payload.account].replies.forEach((data, index) => {
+          if (data.forum) {
+              authors[action.payload.account]['replies'][index]['forum'] = ForumReducer.setProgression(data.forum)
+          }
+      })
       return Object.assign({}, state, { authors });
     case types.POST_LOAD_RESPONSES_BY_AUTHOR_RESOLVED:
       let { responses, totalResponses } = action.payload;
