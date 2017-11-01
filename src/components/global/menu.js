@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { Button, Container, Dropdown, Header, Icon, Menu, Popup, Segment, Table } from 'semantic-ui-react'
+import { Button, Container, Dropdown, Grid, Header, Icon, Menu, Popup } from 'semantic-ui-react'
 
 import * as accountActions from '../../actions/accountActions'
 import LoginButton from '../elements/login/button'
@@ -48,6 +48,9 @@ class HeaderMenu extends Component {
     const reward_vests = data.reward_vesting_balance;
     this.setState({isClaiming: true})
     this.props.actions.claimRewards({ account, reward_sbd, reward_steem, reward_vests });
+  }
+  vests_to_sp(vests){
+      return Math.round(vests / 1e6 * this.props.status.network.steem_per_mvests * 1000) / 1000
   }
   render() {
     const { data, loading, name } = this.props.account
@@ -108,37 +111,42 @@ class HeaderMenu extends Component {
                   <Icon name='gift' size='big' style={{margin: 0}} />
                 </Menu.Item>
               }
-              flowing
               hoverable
             >
-              <Segment basic>
-                <Header>
-                  Rewards
-                  <Header.Subheader>
-                    You have pending rewards!
-                  </Header.Subheader>
-                </Header>
-                <Table definition>
-                  <Table.Body>
-                    {hasBalance.map((field) => {
-                      const symbol = field.split("_")[1]
-                      return (
-                        <Table.Row key={symbol}>
-                          <Table.Cell>
-                            {symbol}
-                          </Table.Cell>
-                          <Table.Cell>
-                            {data[field]}
-                          </Table.Cell>
-                        </Table.Row>
-                      )
-                    })}
-                  </Table.Body>
-                </Table>
-                <Button color='purple' fluid size='small' onClick={this.handleClaim} loading={isClaiming}>
-                  Claim Rewards
-                </Button>
-              </Segment>
+                <Grid>
+                    <Grid.Row columns={1}>
+                        <Grid.Column>
+                            <Header>
+                              Pending Rewards
+                              <Header.Subheader>
+                                Rewards from your posting and voting activity.
+                              </Header.Subheader>
+                            </Header>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row columns={2}>
+                        {hasBalance.map((field) => {
+                          const kind = field.split("_")[1]
+                          const amount = data[field].split(" ")[0]
+                          const value = (kind === 'vesting') ? this.vests_to_sp(amount) : amount
+                          const symbol = (kind === 'vesting') ? 'SP' : 'SBD'
+                          return (
+                              <Grid.Column key={symbol} textAlign='center'>
+                                    <Header color='green'>
+                                        +{value}{' '}<small>{symbol}</small>
+                                    </Header>
+                              </Grid.Column>
+                          )
+                        })}
+                    </Grid.Row>
+                    <Grid.Row columns={1}>
+                        <Grid.Column>
+                            <Button color='purple' fluid size='small' onClick={this.handleClaim} loading={isClaiming}>
+                              Claim Rewards
+                            </Button>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </Popup>
           )
         }
