@@ -298,8 +298,8 @@ export function submit(account, data, parent, action = 'post') {
       { "account": "chainbb", "weight": 1500 }
     ]
     // If the forum is funded, add the creator as a beneficiary
-    if (data.forum && data.forum.target) {
-        const { target } = data.forum
+    if (data.forum && data.forum.progression) {
+        const target = data.forum
         const chainbbPercent = 1500
         const ownerPercent = target.progression.split
         beneficiaries = [

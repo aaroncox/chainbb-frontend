@@ -127,49 +127,8 @@ class Forum extends React.Component {
   }
 
   setForum = (forum) => {
-      forum = this.setProgression(forum)
       this.setState({forum})
       this.props.actions.setForum(forum)
-  }
-  setProgression = (forum) => {
-      const { increment, steps } = GLOBAL.PROGRESSION
-      const initialCost = 10
-      if (!forum) return forum
-      let { funded } = forum
-      if (!funded) funded = 0
-    //   funded = 14.05
-    //   forum['funded'] = funded
-      let current = funded
-      let level = 0
-      let required = 0
-      let previous = 0
-      let progress = 0
-      let split = 100
-      let next = false
-      for (var i = 0, len = steps.length; i < len; i++) {
-          // Storing progression into current level
-          progress = Math.floor((funded - (initialCost + previous)) * 1000) / 1000
-          // If the funding is greater than the next level + 10 (initial creation)
-          if(funded >= steps[i] + initialCost) {
-              level = i
-              split += increment
-            //   progress = steps[i] + initialCost
-          } else {
-              next = steps[i] + initialCost
-              required = Math.floor((steps[i] - previous) * 1000) / 1000
-              break
-          }
-          previous = steps[i]
-      }
-      forum['progression'] = {
-          current,
-          level,
-          next,
-          progress,
-          required,
-          split,
-      }
-      return forum
   }
   setBreadcrumb = (result) => {
       if (result.forum) {

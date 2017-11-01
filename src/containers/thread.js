@@ -180,6 +180,7 @@ class Thread extends React.Component {
             formHeader={postFormHeader}
             disableAutoFocus={true}
             elements={['body']}
+            forum={this.props.post.forum}
             parent={this.props.post.content}
             onCancel={this.handleCancel}
             onComplete={this.handleResponse}

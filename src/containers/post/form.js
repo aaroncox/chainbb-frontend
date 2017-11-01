@@ -203,7 +203,7 @@ class PostForm extends React.Component {
   submit = (e) => {
     const form = this.form.formsyForm
     const model = form.getModel()
-    const _id = (this.props.forum.target) ? this.props.forum.target._id : this.props.forum._id
+    const _id = (this.props.forum) ? this.props.forum._id : false
     const data = {
         ...model,
         ...this.state,
@@ -401,7 +401,6 @@ function mapStateToProps(state, ownProps) {
   const drafts = store.get('drafts');
   return {
     account: state.account,
-    forum: state.forum,
     post: state.post,
     drafts: (typeof drafts === 'object') ? drafts : {}
   }

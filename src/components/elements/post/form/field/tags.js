@@ -20,8 +20,7 @@ export default class PostFormFieldTags extends React.Component {
   }
   render() {
     const { forum, tags } = this.props
-    const { target } = forum
-    const category = this.props.filter || target.tags[0]
+    const category = this.props.filter || forum.tags[0]
     const userTags = tags.slice(1,5)
     let tagsDisplay = 'None'
     let forumDisplay = false
@@ -31,13 +30,13 @@ export default class PostFormFieldTags extends React.Component {
         <Label horizontal size='large' color='green' style={{marginBottom: '5px'}} onRemove={this.props.removeTag} content={tag} key={tag} />
       ))
     }
-    if(target) {
+    if(forum) {
       forumDisplay = (
         <Table.Row>
           <Table.Cell collapsing>Forum</Table.Cell>
           <Table.Cell>
-            <Link to={`/f/${target._id}`}>
-              {target.name}
+            <Link to={`/f/${forum._id}`}>
+              {forum.name}
             </Link>
           </Table.Cell>
         </Table.Row>
@@ -46,8 +45,8 @@ export default class PostFormFieldTags extends React.Component {
           <Table.Row>
             <Table.Cell collapsing>Namespace</Table.Cell>
             <Table.Cell>
-              <Link to={`/f/${target._id}`}>
-                /f/{target._id}
+              <Link to={`/f/${forum._id}`}>
+                /f/{forum._id}
               </Link>
             </Table.Cell>
           </Table.Row>

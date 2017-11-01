@@ -161,10 +161,10 @@ export default class PostContent extends React.Component {
             actions={this.props.actions}
             formHeader={postFormHeader}
             elements={['body']}
+            forum={this.props.post.forum}
             parent={post}
             onCancel={this.handleResponding}
             onComplete={this.handleRespondingComplete}
-            { ... this.props }
           />
         </Segment>
       )
@@ -173,12 +173,12 @@ export default class PostContent extends React.Component {
       editForm = (
         <Segment basic>
           <PostForm
+            account={this.props.account}
             action='edit'
             actions={this.props.actions}
             formHeader={editFormHeader}
             elements={(post.depth === 0) ? ['title', 'body', 'tags'] : ['body']}
             existingPost={post}
-            account={this.props.account}
             onCancel={this.handleEditing}
             onComplete={this.handleEditingComplete}
           />

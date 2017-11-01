@@ -159,12 +159,12 @@ export default class PostReplyContent extends React.Component {
           <PostForm
             action='create'
             actions={this.props.actions}
+            forum={this.props.topic.forum}
             formHeader={postFormHeader}
             elements={['body']}
             parent={post}
             onCancel={this.handleResponding}
             onComplete={this.handleRespondingComplete}
-            { ... this.props }
           />
         </Segment>
       )
@@ -176,6 +176,7 @@ export default class PostReplyContent extends React.Component {
             action='edit'
             actions={this.props.actions}
             formHeader={editFormHeader}
+            forum={this.props.topic.forum}
             elements={(post.depth === 0) ? ['title', 'body', 'tags'] : ['body']}
             existingPost={post}
             account={this.props.account}
