@@ -31,8 +31,8 @@ class PostForm extends React.Component {
 
   constructor(props) {
     super(props)
-    const { action, filter, forum, existingPost, target } = props;
-    let tags = (filter) ? [filter] : (target && target.tags) ? [target.tags[0]] : [];
+    const { action, filter, forum, existingPost } = props;
+    let tags = (filter) ? [filter] : (forum && forum.tags) ? [forum.tags[0]] : [];
     if (action === 'edit') {
       if (existingPost.json_metadata && existingPost.json_metadata.tags && existingPost.json_metadata.tags.length) {
         tags = existingPost.json_metadata.tags;
@@ -44,8 +44,8 @@ class PostForm extends React.Component {
       activeItem: 'post',
       beneficiaries: {},
       existingPost: (existingPost) ? existingPost : false,
-      category: (existingPost) ? existingPost.parent_permlink : (filter) ? filter : (target && target.tags) ? target.tags[0] : false,
-      recommended: (target && target.tags) ? target.tags : [],
+      category: (existingPost) ? existingPost.parent_permlink : (filter) ? filter : (forum && forum.tags) ? forum.tags[0] : false,
+      recommended: (forum && forum.tags) ? forum.tags : [],
       submitting: false,
       waitingforblock: false,
       preview: {},
