@@ -20,6 +20,7 @@ class Replies extends React.Component {
 
   constructor(props) {
     super(props)
+    const user = props.account.name || false
     let state = {
       loaded: false,
       page: 1,
@@ -28,13 +29,24 @@ class Replies extends React.Component {
       totalReplies: 0,
       user: false
     }
-    const user = props.account.name || false
     if(user) {
-      state.user = user
-      this.props.actions.fetchPostRepliesByAuthor(user);
+        state.user = user
+        this.props.actions.fetchPostRepliesByAuthor(user);
     }
     this.state = state
     this.changePage = this.changePage.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { post } = nextProps
+    const user = nextProps.account.name || false
+    if(nextProps.account && this.props.account.name !== user) {
+      this.props.actions.fetchPostRepliesByAuthor(user);
+      this.setState({user})
+    }
+    if(post.authors[user]) {
+      const { replies, totalReplies } = post.authors[user]
+      this.setState({ replies, totalReplies, loaded: true })
+    }
   }
   changePage = (page) => {
     this.setState({
@@ -44,29 +56,25 @@ class Replies extends React.Component {
     this.props.actions.fetchPostRepliesByAuthor(this.state.user, page);
     goToTop();
   }
-  componentWillReceiveProps(nextProps) {
-    const user = nextProps.account.name || false
-    const { post } = nextProps
-    if(nextProps.account && this.state.user !== user) {
-      this.props.actions.fetchPostRepliesByAuthor(user);
-      this.setState({user})
-    }
-    if(post.authors[user]) {
-      const { replies, totalReplies } = post.authors[user]
-      let content = false
-      if(replies && replies.length > 0) {
-        content = replies.map((topic, idx) => <ForumPostReply topic={topic} key={idx} {... nextProps} />)
-      }
-      this.setState({ content, replies, totalReplies, loaded: true })
-    }
-  }
   render() {
     const { totalReplies } = this.state
-    let { content, loaded } = this.state
-    if(!content && !loaded) {
-        content = <Segment attached padded='very' loading style={{margin: '2em 0'}} />
+    let content = <Segment attached padded='very' loading style={{margin: '2em 0'}} />
+    let { loaded, replies } = this.state
+    if(replies && totalReplies > 0) {
+      content = replies.map((topic, idx) => (
+          <ForumPostReply
+              account={this.props.account}
+              actions={this.props.actions}
+              key={idx}
+              preferences={this.props.preferences}
+              processing={this.props.processing}
+              post={this.props.post}
+              status={this.props.status}
+              topic={topic}
+          />
+      ))
     }
-    if(!content && loaded) {
+    if(!totalReplies === 0 && loaded) {
         content = (
             <Segment attached textAlign='center' padded='very' style={{margin: '2em 0'}}>
                 <Header as='h2' icon>
