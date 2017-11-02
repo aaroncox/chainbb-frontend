@@ -138,8 +138,14 @@ export default class PostFormFieldRewards extends React.Component {
   render() {
     const authorPercent = this.getAuthorPercentage()
     const rows = this.generateRows()
-    const { value, draft } = this.props
+    const { draft, forum, value } = this.props
     const errorLabel = <Label color="red" pointing/>
+    let forum_percent = 0
+    let chainbb_percent = 15
+    if(forum && forum.progression && forum.progression.split) {
+        forum_percent = forum.progression.split / 100
+        chainbb_percent = 15 - forum_percent
+    }
     return (
       <Grid stackable={true}>
         <Grid.Row>
@@ -254,13 +260,13 @@ export default class PostFormFieldRewards extends React.Component {
               </Table>
               <Header>
                 <Header.Subheader>
-                  An additional 25% is allocated to Curators on the Steem blockchain, as well as 15% to the chainBB Team and Community.
+                  The author recieves a total of 60% after all is calculated. 25% of the total is allocated to Curators by the Steem blockchain, as well as {forum_percent}% to the forum itself and {chainbb_percent}% to chainBB.
                 </Header.Subheader>
                 <Header.Subheader>
                   <small>
                     <strong>*</strong>
                     {' '}
-                    Represents the actual percentage after the chainBB beneficiary.
+                    Represents the actual percentage after the chainBB beneficiary, but before curation.
                   </small>
                 </Header.Subheader>
               </Header>
