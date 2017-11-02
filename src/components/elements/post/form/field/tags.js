@@ -20,8 +20,8 @@ export default class PostFormFieldTags extends React.Component {
   }
   render() {
     const { forum, tags } = this.props
-    const category = this.props.filter || forum.tags[0]
-    const userTags = tags.slice(1,5)
+    const category = this.props.filter || (forum) ? forum.tags[0] : tags[0]
+    const userTags = (tags && tags.length > 0) ? tags.slice(1,5) : []
     let tagsDisplay = 'None'
     let forumDisplay = false
     let namespaceDisplay = false

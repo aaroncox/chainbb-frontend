@@ -336,6 +336,7 @@ class PostForm extends React.Component {
             <PostFormFieldRewards
               author={account.name}
               draft={draft}
+              forum={this.props.forum}
               handleBeneficiariesUpdate={this.handleBeneficiariesUpdate}
             />
           </Segment>

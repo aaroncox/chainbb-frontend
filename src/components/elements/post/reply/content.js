@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { Link } from 'react-router-dom'
 import Noty from 'noty';
 
-import { Link } from 'react-router-dom'
 import { Button, Divider, Header, Popup, Segment } from 'semantic-ui-react'
 
 import MarkdownViewer from '../../../../utils/MarkdownViewer';
