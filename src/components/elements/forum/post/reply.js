@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Divider, Grid, Header, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Icon, Label, Segment } from 'semantic-ui-react'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router-dom'
 import PlatformLink from '../../../../utils/link/platform'
@@ -13,6 +13,7 @@ export default class ForumPostReply extends React.Component {
   render() {
     const {topic} = this.props
     const { parent, reply } = topic
+    const votes = Object.keys(reply.votes).length
     let quote = false
     if(parent.depth > 0) {
       quote = (
@@ -55,10 +56,13 @@ export default class ForumPostReply extends React.Component {
                       </Header.Subheader>
                     </Header>
                   </Grid.Column>
-                  <Grid.Column tablet={3} computer={3} mobile={3} textAlign='right'>
-                    <small>
-                      <PlatformLink platform={reply.json_metadata.app} />
-                    </small>
+                  <Grid.Column tablet={3} computer={3} mobile={3} textAlign='right' verticalAlign='middle'>
+                      <small>
+                        <PlatformLink platform={reply.json_metadata.app} />
+                      </small>
+                    <Label color='blue' size='small' basic as='a' style={{marginLeft: '0.5em'}}>
+                        <Icon name='thumbs up' color='blue' />{votes}&nbsp;
+                    </Label>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
