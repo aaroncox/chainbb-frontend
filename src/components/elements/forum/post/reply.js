@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Divider, Grid, Header, Icon, Label, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Icon, Label, List, Popup, Segment } from 'semantic-ui-react'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router-dom'
 import PlatformLink from '../../../../utils/link/platform'
@@ -57,9 +57,32 @@ export default class ForumPostReply extends React.Component {
                     </Header>
                   </Grid.Column>
                   <Grid.Column tablet={3} computer={3} mobile={3} textAlign='right' verticalAlign='middle'>
-                      <small>
-                        <PlatformLink platform={reply.json_metadata.app} />
-                      </small>
+                    <Popup
+                        trigger={(
+                            <small>
+                                <PlatformLink post={reply} platform={reply.json_metadata.app} />
+                            </small>
+                        )}
+                        hoverable
+                        header='View this post on...'
+                        content={(
+                            <List>
+                                <List.Item as='a' href={`https://steemit.com/${reply.category}/@${reply.author}/${reply.permlink}`} target='_blank'>
+                                    steemit.com
+                                </List.Item>
+                                <List.Item as='a' href={`https://busy.org/${reply.category}/@${reply.author}/${reply.permlink}`} target='_blank'>
+                                    busy.org
+                                </List.Item>
+                                <List.Item as='a' href={`https://steemd.com/${reply.category}/@${reply.author}/${reply.permlink}`} target='_blank'>
+                                    steemd.com (explorer)
+                                </List.Item>
+                                <List.Item as='a' href={`https://steemdb.com/${reply.category}/@${reply.author}/${reply.permlink}`} target='_blank'>
+                                    steemdb.com (explorer)
+                                </List.Item>
+                            </List>
+                        )}
+                        on={['hover']}
+                    />
                     <Label color='blue' size='small' basic as='a' style={{marginLeft: '0.5em'}}>
                         <Icon name='thumbs up' color='blue' />{votes}&nbsp;
                     </Label>

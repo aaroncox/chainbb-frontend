@@ -1,9 +1,19 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { Link } from 'react-router-dom'
+import {
+    Link
+}
+from 'react-router-dom'
 import Noty from 'noty';
 
-import { Button, Divider, Header, Popup, Segment } from 'semantic-ui-react'
+import {
+    Button,
+    Divider,
+    Header,
+    Popup,
+    Segment
+}
+from 'semantic-ui-react'
 
 import MarkdownViewer from '../../../../utils/MarkdownViewer';
 import PostControls from '../controls'
@@ -14,92 +24,94 @@ import AccountLink from '../../account/link'
 
 export default class PostReplyContent extends React.Component {
 
-  handleResponding = (e) => {
-    this.setState({
-      responding: (this.state && this.state.responding) ? !this.state.responding : true,
-    })
-  }
+        handleResponding = ( e ) => {
+            this.setState( {
+                responding: ( this.state && this.state.responding ) ? !this.state.responding : true,
+            } )
+        }
 
-  handleRespondingComplete = (e) => {
-    new Noty({
-      closeWith: ['click', 'button'],
-      layout: 'topRight',
-      progressBar: true,
-      theme: 'semanticui',
-      text: ReactDOMServer.renderToString(
-        <Header>
+        handleRespondingComplete = ( e ) => {
+            new Noty( {
+                    closeWith: [ 'click', 'button' ],
+                    layout: 'topRight',
+                    progressBar: true,
+                    theme: 'semanticui',
+                    text: ReactDOMServer.renderToString(
+                        <Header>
           Your post has been submitted!
           <Header.Subheader>
             It may take a few moments to appear on chainBB.com, and will appear at the end of this thread.
           </Header.Subheader>
         </Header>
-      ),
-      type: 'success',
-      timeout: 8000
-    }).show();
-    this.setState({
-      responding: false
-    })
-  }
+                    ),
+                    type: 'success',
+                    timeout: 8000
+                } )
+                .show();
+            this.setState( {
+                responding: false
+            } )
+        }
 
-  handleEditing = () => {
-    if(this.props.scrollToPost) {
-      this.props.scrollToPost(this.props.content._id)
-    }
-    this.setState({
-      editing: (this.state && this.state.editing) ? !this.state.editing : true,
-    })
-  }
+        handleEditing = () => {
+            if ( this.props.scrollToPost ) {
+                this.props.scrollToPost( this.props.content._id )
+            }
+            this.setState( {
+                editing: ( this.state && this.state.editing ) ? !this.state.editing : true,
+            } )
+        }
 
-  handleEditingComplete = (data) => {
-    new Noty({
-      closeWith: ['click', 'button'],
-      layout: 'topRight',
-      progressBar: true,
-      theme: 'semanticui',
-      text: ReactDOMServer.renderToString(
-        <Header>
+        handleEditingComplete = ( data ) => {
+            new Noty( {
+                    closeWith: [ 'click', 'button' ],
+                    layout: 'topRight',
+                    progressBar: true,
+                    theme: 'semanticui',
+                    text: ReactDOMServer.renderToString(
+                        <Header>
           Your post has been edited
           <Header.Subheader>
             It may take a few moments to update throughout chainBB.com.
           </Header.Subheader>
         </Header>
-      ),
-      type: 'success',
-      timeout: 8000
-    }).show();
-    this.setState({
-      editing: false,
-      updatedPost: data.post
-    })
-  }
+                    ),
+                    type: 'success',
+                    timeout: 8000
+                } )
+                .show();
+            this.setState( {
+                editing: false,
+                updatedPost: data.post
+            } )
+        }
 
-  render() {
-    let post = this.props.content,
-        postContent = false,
-        postControls = false,
-        postFooter = false,
-        quote = this.props.quote,
-        title = false,
-        postFormHeader = (
-          <PostFormHeader
+        render() {
+                let post = this.props.content,
+                    postContent = false,
+                    postControls = false,
+                    postFooter = false,
+                    quote = this.props.quote,
+                    title = false,
+                    postFormHeader = (
+                        <PostFormHeader
             title='Leave a Reply'
             subtitle=''
             />
-        ),
-        editFormHeader = (
-          <PostFormHeader
+                    ),
+                    editFormHeader = (
+                        <PostFormHeader
             title='Edit your Post'
             color='green'
             subtitle=''
             />
-        ),
-        responding = (this.state && this.state.responding) ? this.state.responding : false,
-        editing = (this.state && this.state.editing) ? this.state.editing : false,
-        editButton = false,
-        editForm = false,
-        postButton = (
-          <Popup
+                    ),
+                    responding = ( this.state && this.state.responding ) ? this.state.responding : false,
+                    editing = ( this.state && this.state.editing ) ? this.state.editing : false,
+                    editButton = false,
+                    editForm = false,
+                    postButton = (
+                        <Popup
             trigger={
               <Button floated='right'>
                 <i className={"left quote icon"}></i>
@@ -242,8 +254,8 @@ export default class PostReplyContent extends React.Component {
             <Button
               as={Link}
               to={post.url}
-              floated='right'
               basic
+              floated='right'
               icon='external'
             />
             {postButton}
