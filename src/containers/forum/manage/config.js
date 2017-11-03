@@ -60,7 +60,7 @@ class ForumConfigForm extends React.Component {
                             awaitingBlock: true,
                         })
                         if(this.props.newForum) {
-                            this.props.history.push(`/f/${this.props.forumid}`);
+                            this.props.history.push(`/f/${this.props.forum.target._id}`);
                         }
                         this.timeout = setTimeout(() => {
                             this.setState({

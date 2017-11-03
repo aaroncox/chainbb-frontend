@@ -57,13 +57,13 @@ class Forum extends React.Component {
   showNewPost = () => this.setState({ page: 1, showNewPost: true })
   hideNewPost = (e) => this.setState({ showNewPost: false })
   showConfig = () => {
-      if(!this.state.showConfig) {
+      if(!this.state.showConfig && this.props.forumid) {
           this.setState({showConfig: true})
           this.props.history.push(`/f/${this.props.forumid}/overview`);
       }
   }
   hideConfig = () => {
-      if(this.state.showConfig) {
+      if(this.state.showConfig && this.props.forumid) {
           this.setState({showConfig: false})
           this.props.history.push(`/f/${this.props.forumid}`);
           this.getForum()
