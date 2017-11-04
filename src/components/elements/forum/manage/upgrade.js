@@ -65,7 +65,7 @@ export default class ForumUpgrade extends React.Component {
                     <Message
                         warning
                         title='This system is in development.'
-                        content='The upgrades system is still in development and beneficiaries will not be displayed/counted yet. Once this is and beneficiaries are recording (about one week), that data will be accounted for here.'
+                        content='The upgrades system is still in development and may undergo changes.'
                     />
                 </Segment>
                 <Segment padded secondary attached>
