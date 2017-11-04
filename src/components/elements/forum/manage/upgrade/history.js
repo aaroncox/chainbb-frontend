@@ -41,6 +41,7 @@ export default class ForumUpgradeHistory extends React.Component {
                         <Table.HeaderCell collapsing>Block</Table.HeaderCell>
                         <Table.HeaderCell collapsing textAlign='right'>Contribution</Table.HeaderCell>
                         <Table.HeaderCell>Account</Table.HeaderCell>
+                        <Table.HeaderCell>Activity</Table.HeaderCell>
                         <Table.HeaderCell textAlign='right'>Date</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
