@@ -226,7 +226,7 @@ export default class PostContent extends React.Component {
         postHeader = false
       }
       postContent = (
-        <Segment attached className='thread-post'>
+        <Segment attached clearing className='thread-post'>
           {postHeader}
           {quote}
           <MarkdownViewer formId={'viewer'} text={post.body} jsonMetadata={{}} large highQualityPost={true}  />
