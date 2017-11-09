@@ -156,7 +156,7 @@ class HeaderMenu extends Component {
       <Menu color='blue' size='large' inverted style={{borderBottom: '3px solid #767676'}}>
         <Container>
           <Link to='/' className='title active item'>
-            <strong>chainBB.com</strong>
+            <strong>test pull request</strong>
           </Link>
           {/*
           <Link to='/' className='title item'>General</Link>
