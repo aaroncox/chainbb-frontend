@@ -2,6 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import TimeAgo from 'react-timeago'
+import * as GLOBAL from '../../global';
 
 import { Button, Dimmer, Divider, Grid, Header, Icon, Label, Loader, Segment } from 'semantic-ui-react'
 
@@ -33,7 +34,6 @@ class Response extends React.Component {
   }
 
   handleReveal = (e, data) => {
-    console.log(e, data)
     const revealed = this.state.revealed
     if(revealed.indexOf(data.value) === -1) {
       revealed.push(data.value)
@@ -80,6 +80,7 @@ class Response extends React.Component {
               hidden = (post.net_votes < 0),
               parent_post = this.getParent(post),
               quote = ''
+          const isBot = GLOBAL.BOTS.indexOf(post.author) >= 0
           if(parent_post['_id']) {
             quote = (
               <div>
@@ -108,6 +109,20 @@ class Response extends React.Component {
                 <Divider hidden></Divider>
                 <Divider hidden></Divider>
               </div>
+            )
+          }
+          if(isBot && this.state.revealed.indexOf(post._id) === -1) {
+            return (
+              <Grid.Row key={index} id={post._id}>
+                <Grid.Column className='mobile hidden' width={4}></Grid.Column>
+                <Grid.Column mobile={16} tablet={12} computer={12}>
+                  <Divider horizontal>
+                    <Button basic size='tiny' onClick={this.handleReveal} value={post._id}>
+                      Bot Post (@{post.author}) hidden - click to show
+                    </Button>
+                  </Divider>
+                </Grid.Column>
+              </Grid.Row>
             )
           }
           if(hidden && this.state.revealed.indexOf(post._id) === -1) {
