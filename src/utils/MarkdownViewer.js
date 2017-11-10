@@ -2,18 +2,35 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Component} from 'react'
 import Remarkable from 'remarkable'
+import hljs from 'highlight.js'
 import sanitizeConfig, {noImageText} from './SanitizeConfig'
 import { Embed } from 'semantic-ui-react'
 import sanitize from 'sanitize-html'
 import HtmlReady from '../shared/HtmlReady'
 
-const remarkable = new Remarkable({
+const remarkable = new Remarkable('full', {
     html: true, // remarkable renders first then sanitize runs...
     breaks: true,
+    langPrefix: 'hljs language-',  // CSS language prefix for fenced blocks
     linkify: false, // linkify is done locally
     typographer: false, // https://github.com/jonschlinkert/remarkable/issues/142#issuecomment-221546793
-    quotes: '“”‘’'
+    quotes: '“”‘’',
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(lang, str).value;
+        } catch (__) {}
+      }
+
+      try {
+        return hljs.highlightAuto(str).value;
+      } catch (__) {}
+
+      return '';
+    }
 })
+
+
 
 class MarkdownViewer extends Component {
 
@@ -75,7 +92,6 @@ class MarkdownViewer extends Component {
         text = text.replace(/<!--([\s\S]+?)(-->|$)/g, '(html comment removed: $1)')
 
         let renderedText = html ? text : remarkable.render(text)
-
         // Embed videos, link mentions and hashtags, etc...
         if(renderedText) renderedText = HtmlReady(renderedText).html
 
