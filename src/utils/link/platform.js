@@ -1,37 +1,69 @@
 import React from 'react'
 
+const fallback = {
+    id: 'unknown-client',
+    name: 'unknown',
+    url: 'https://steemit.com',
+    pages: ['account', 'comment'],
+    version: 'unknown',
+}
+
+const platforms = [
+    {
+        id: 'busy',
+        name: 'busy',
+        url: 'https://busy.org',
+        pages: ['account', 'comment'],
+    },
+    {
+        id: 'chainbb',
+        name: 'chainbb',
+        url: 'https://chainbb.com',
+        pages: ['account', 'comment'],
+    },
+    {
+        id: 'esteem',
+        name: 'esteem',
+        url: 'http://esteem.ws',
+        pages: ['account', 'comment'],
+    },
+    {
+        id: 'steemit',
+        name: 'steemit',
+        url: 'https://steemit.com',
+        pages: ['account', 'comment'],
+    },
+    {
+        id: '⇐stoned⇔pastries⇒',
+        name: '⇐stoned⇔pastries⇒',
+        url: 'https://minnowbooster.net',
+        pages: ['account', 'comment'],
+    },
+]
+
 export default class PlatformLink extends React.Component {
-    render() {
-      let { platform, post } = this.props,
-          link = <span>{platform}</span>,
-          url = ''
-      if(post) {
-          url = `/${post.category}/@${post.author}/${post.permlink}`
-      }
-      if(platform) {
-        let [id, version] = platform.split("/")
-        switch(id) {
-          case "busy":
-            link = <a rel='nofollow' alt={`${id}/${version}`} href={`https://busy.org${url}`}>busy/{version}</a>
-            break
-          case "chainbb":
-            link = <a rel='nofollow' alt={`${id}/${version}`} href={`https://chainbb.com${url}`}>chainbb/{version}</a>
-            break
-          case "esteem":
-            link = <a rel='nofollow' alt={`${id}/${version}`} href={`http://esteem.ws`}>esteem/{version}</a>
-            break
-          case "steemit":
-            link = <a rel='nofollow' alt={`${id}/${version}`} href={`https://steemit.com${url}`}>steemit/{version}</a>
-            break
-          case "⇐stoned⇔pastries⇒":
-            link = <a rel='nofollow' alt={`${id}/${version}`} href={`https://minnowbooster.net`}>⇐stoned⇔pastries⇒/{version}</a>
-            break
-          default:
-            break
+    platform = (post) => {
+        const apptag = post.json_metadata.app
+        const [ id, version ] = apptag.split('/')
+        const platform = platforms.find(o => o.id === id)
+        if(platform) {
+            platform['version'] = version
+            return platform
         }
-      } else {
-        link = <span>unknown client</span>
-      }
-      return(link);
+        return fallback
+    }
+    canonical = (platform, post) => {
+        return platform['url'] + post['url']
+    }
+    render() {
+        let { platform, post } = this.props,
+            link = <span>{platform}</span>,
+            url = ''
+        if(post) {
+            platform = this.platform(post)
+            url = this.canonical(platform, post)
+            link = <a rel='nofollow' alt={`${platform.name}`} href={`${url}`}>{platform.name}/{platform.version}</a>
+        }
+        return(link);
     }
 }
