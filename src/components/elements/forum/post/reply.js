@@ -50,7 +50,7 @@ export default class ForumPostReply extends React.Component {
                         {'↳ '}
                         <TimeAgo date={`${reply.created}Z`} />
                         {' • '}
-                        <Link to={`/${reply.category}/@${reply.root_post}`}>
+                        <Link to={`/${reply.root_namespace || reply.category}/@${reply.root_post || parent._id}`}>
                           {parent.root_title}
                         </Link>
                       </Header.Subheader>
