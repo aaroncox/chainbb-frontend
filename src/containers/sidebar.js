@@ -67,35 +67,21 @@ class Sidebar extends React.Component {
         if(Object.keys(forums).length) {
           subscribedForums = (
             <Segment basic>
-              <Header size='small' textAlign='center'>
-                Forum Subscriptions
-              </Header>
               <Menu vertical fluid color='blue' size='small'>
-                {Object.keys(forums).map((index) => {
-                  return (
-                    <Link
-                      key={index}
-                      className='item'
-                      to={`/f/${forums[index].id}`}
-                    >
-                      <Header size='small'>
-                        {(forums[index].parent)
-                          ? (
-                            <Header.Subheader>
-                              Forums / {forums[index].parent_name}
-                            </Header.Subheader>
-                          )
-                          : (
-                            <Header.Subheader>
-                              Forums
-                            </Header.Subheader>
-                          )
-                        }
-                        {forums[index].name}
-                      </Header>
-                    </Link>
-                  )
-                })}
+                {[].concat(Object.values(forums))
+                  .sort((a, b) => a.id > b.id)
+                  .map((forum, i) => {
+                    return (
+                      <Link
+                        key={i}
+                        className='item'
+                        to={`/f/${forum.id}`}
+                      >
+                        {forum.id}
+                      </Link>
+                    )
+                  }
+                )}
               </Menu>
             </Segment>
           )
