@@ -49,7 +49,6 @@ module.exports = {
         'calva',
         'cannabiscurator',
         'centerlink',
-        'cheetah',
         'cleverbot',
         'cnbuddy',
         'counterbot',
