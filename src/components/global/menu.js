@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { I18n, Trans } from 'react-i18next';
 
-import { Button, Container, Dropdown, Grid, Header, Icon, Menu, Popup } from 'semantic-ui-react'
+import { Button, Container, Dropdown, Flag, Grid, Header, Icon, Menu, Popup } from 'semantic-ui-react'
 
 import * as accountActions from '../../actions/accountActions'
 import LoginButton from '../elements/login/button'
@@ -11,6 +12,10 @@ import LogoutItem from '../elements/login/logout'
 
 import AccountAvatar from '../elements/account/avatar'
 import * as statusActions from '../../actions/statusActions'
+
+const languageOptions = [
+    { key: 'en', value: 'en', flag: 'us', text: 'EN' },
+]
 
 class HeaderMenu extends Component {
   state = {
@@ -50,39 +55,30 @@ class HeaderMenu extends Component {
     this.props.actions.claimRewards({ account, reward_sbd, reward_steem, reward_vests });
   }
   vests_to_sp(vests){
-      return Math.round(vests / 1e6 * this.props.status.network.steem_per_mvests * 1000) / 1000
+    return Math.round(vests / 1e6 * this.props.status.network.steem_per_mvests * 1000) / 1000
+  }
+  languageFlag = (lang) => {
+    let flag = lang
+    switch(lang) {
+      case 'en':
+        flag = 'us'
+        break;
+  }
+    return <Flag name={flag} />
+  }
+  onLanguageChange = (e, props) => {
+    props['data-i18n'].changeLanguage(props.value)
   }
   render() {
     const { data, loading, name } = this.props.account
-    const { height } = this.props.status.network
     const { isClaiming, hasBalance } = this.state
     let avatar = false
     let pendingBalance = false
+    let languageItem = false
     let userItem = (
       <Menu.Item>
         <LoginButton {... this.props}/>
       </Menu.Item>
-    )
-    const indicator = (!loading) ? (
-      <Popup
-        trigger={
-          <Icon name='checkmark' />
-        }
-        position='bottom center'
-        inverted
-        content={`Current Blockchain Height: #${height}`}
-        basic
-      />
-    ) : (
-      <Popup
-        trigger={
-          <Icon loading name='asterisk' />
-        }
-        position='bottom center'
-        inverted
-        content={`Connecting to the Steem blockchain`}
-        basic
-      />
     )
     if (name) {
       avatar = (
@@ -153,25 +149,39 @@ class HeaderMenu extends Component {
       }
     }
     return (
-      <Menu color='blue' size='large' inverted style={{borderBottom: '3px solid #767676'}}>
-        <Container>
-          <Link to='/' className='title active item'>
-            <strong>chainBB.com</strong>
-          </Link>
-          {/*
-          <Link to='/' className='title item'>General</Link>
-          <Link to='/forums/steem' className='title item'>Steem</Link>
-          <Link to='/forums/crypto' className='title item'>Crypto</Link>
-          */}
-          <Menu.Menu position='right'>
-            {pendingBalance}
-            {userItem}
-            <Menu.Item>
-              {indicator}
-            </Menu.Item>
-          </Menu.Menu>
-        </Container>
-      </Menu>
+      <I18n>
+        {
+          (t, { i18n }) => {
+              return (
+              <Menu color='blue' size='large' inverted style={{borderBottom: '3px solid #767676'}}>
+                <Container>
+                  <Link to='/' className='title active item'>
+                    <strong>{t('title')}</strong>
+                  </Link>
+                  {/*
+                  <Link to='/' className='title item'>General</Link>
+                  <Link to='/forums/steem' className='title item'>Steem</Link>
+                  <Link to='/forums/crypto' className='title item'>Crypto</Link>
+                  */}
+                  <Menu.Menu position='right'>
+                    {pendingBalance}
+                    {userItem}
+                    <Dropdown
+                      className='icon'
+                      data-i18n={i18n}
+                      icon={null}
+                      item
+                      onChange={this.onLanguageChange}
+                      options={languageOptions}
+                      pointing='top right'
+                      trigger={this.languageFlag(i18n.language)}
+                    />
+                  </Menu.Menu>
+                </Container>
+              </Menu>
+          )}
+        }
+      </I18n>
     )
   }
 }

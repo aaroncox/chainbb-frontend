@@ -1,0 +1,5 @@
+{
+  "title": "chainBB.com",
+  "footer": "An experimental forum powered by the %s blockchain - brought to you by %s.",
+  "connection_issue": "chainBB is experiencing connectivity issues and is {{blocksBehind}} blocks behind ({{timeBehind}}) on syncronization."
+}

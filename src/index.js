@@ -4,12 +4,14 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'
 import App from './containers/app'
 import reducer from './reducers'
 
-import './semantic/dist/semantic.min.css';
+import './semantic/dist/semantic.min.css'
 import './index.css'
+
+import './i18n'
 
 const target = document.getElementById('root')
 const store = createStore(reducer, applyMiddleware(thunk))
