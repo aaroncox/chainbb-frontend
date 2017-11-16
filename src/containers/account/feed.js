@@ -105,14 +105,14 @@ class Feed extends React.Component {
               <Grid.Row>
                 <Grid.Column width={1}></Grid.Column>
                 <Grid.Column width={1}></Grid.Column>
-                <Grid.Column width={12}>
+                <Grid.Column width={10}>
                   <Header size='small'>
                     Post
                   </Header>
                 </Grid.Column>
-                <Grid.Column width={2} only='large screen' className='center aligned'>
+                <Grid.Column width={4} only='large screen' textAlign='center'>
                   <Header size='small'>
-                    Replies
+                    Activity
                   </Header>
                 </Grid.Column>
               </Grid.Row>

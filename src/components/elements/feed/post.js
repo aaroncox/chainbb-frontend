@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Grid, Header, Icon, Popup, Segment } from 'semantic-ui-react'
+import { Grid, Header, Icon, Label, Popup, Segment } from 'semantic-ui-react'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router-dom'
 import AccountAvatar from '../account/avatar'
 import AccountLink from '../account/link'
 import Paginator from '../forum/post/paginator'
+import PostVotes from '../../../containers/post/votes'
 
 export default class FeedPost extends React.Component {
   render() {
@@ -53,7 +54,7 @@ export default class FeedPost extends React.Component {
                 style={{minHeight: '35px', minWidth: '35px', marginBottom: 0}}
               />
             </Grid.Column>
-            <Grid.Column mobile={12} tablet={12} computer={12} largeScreen={12}>
+            <Grid.Column mobile={10} tablet={10} computer={10} largeScreen={10}>
               <Header size='small'>
                 <Header.Content>
                   <Link to={`${topic.url}`}>
@@ -69,9 +70,14 @@ export default class FeedPost extends React.Component {
                 </Header.Content>
               </Header>
             </Grid.Column>
-            <Grid.Column width={2} className="center aligned tablet or lower hidden">
+            <Grid.Column width={4} className="center aligned tablet or lower hidden">
               <Header size='small'>
-                {topic.children}
+                <Label size='small' color='grey' basic style={{marginLeft: '0.5em'}}>
+                  <Icon color='grey' name='comments' />{topic.children}&nbsp;
+                </Label>
+                <PostVotes
+                  target={topic}
+                />
               </Header>
             </Grid.Column>
           </Grid.Row>
