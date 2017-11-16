@@ -188,7 +188,7 @@ export default class PostContent extends React.Component {
     if(post.depth === 0) {
       let tags = false
       if(post.json_metadata && post.json_metadata.tags && typeof Array.isArray(post.json_metadata.tags)) {
-        tags = post.json_metadata.tags.map((tag, i) => <span key={i}>
+        tags = post.json_metadata.tags.slice(0,5).map((tag, i) => <span key={i}>
           {!!i && " • "}
           <Link to={`/topic/${tag}`}>
             #{tag}
