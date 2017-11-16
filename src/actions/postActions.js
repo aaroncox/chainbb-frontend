@@ -127,6 +127,34 @@ export function fetchPostByAuthor(author, page = 1) {
   }
 }
 
+export function fetchPostLive(author, permlink) {
+  return dispatch => {
+    steem.api.getContent(author, permlink, function(err, data) {
+      if(err) {
+
+      } else {
+        dispatch(fetchPostVotesResolved({
+          author,
+          permlink,
+          data: data.active_votes
+        }))
+        dispatch(fetchPostLiveResolved({
+          author,
+          permlink,
+          data
+        }))
+      }
+    })
+  }
+}
+
+export function fetchPostLiveResolved(payload = {}) {
+  return {
+    type: types.POST_LOAD_LIVE_RESOLVED,
+    payload: payload
+  }
+}
+
 export function fetchPostRepliesByAuthorResolved(payload = {}) {
   return {
     type: types.POST_LOAD_REPLIES_BY_AUTHOR_RESOLVED,
@@ -223,6 +251,29 @@ export function fetchPostResponses(params) {
       console.error(response.status);
       dispatch(fetchPostResponsesResolved())
     }
+  }
+}
+
+export function fetchPostVotes(author, permlink) {
+  return dispatch => {
+    steem.api.getActiveVotes(author, permlink, function(err, data) {
+      if(err) {
+
+      } else {
+        dispatch(fetchPostVotesResolved({
+          author,
+          permlink,
+          data
+        }))
+      }
+    })
+  }
+}
+
+export function fetchPostVotesResolved(payload = {}) {
+  return {
+    type: types.POST_LOAD_VOTES_RESOLVED,
+    payload: payload
   }
 }
 
@@ -397,5 +448,12 @@ export function submit(account, data, parent, action = 'post') {
         })
       }
     });
+  }
+}
+
+export function removePostLive(author, permlink) {
+  return {
+    type: types.POST_REMOVE_LIVE,
+    payload: { author, permlink }
   }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Grid, Header, Icon, Label, List, Popup, Segment } from 'semantic-ui-react'
+import { Grid, Header, List, Popup, Segment } from 'semantic-ui-react'
 import TimeAgo from 'react-timeago'
 import { Link } from 'react-router-dom'
+import PostVotes from '../../../../../containers/post/votes'
 import PlatformLink from '../../../../../utils/link/platform'
 import AccountAvatar from '../../../account/avatar'
 import AccountLink from '../../../account/link'
@@ -11,7 +12,7 @@ export default class PostReplyHeader extends React.Component {
   render() {
     const { topic } = this.props
     const { parent, reply } = topic
-    const votes = Object.keys(reply.votes).length
+
     return (
         <Segment style={{ borderTop: '2px solid #2185D0' }} secondary attached stacked={(this.props.op && this.props.page !== 1)}>
           <Grid>
@@ -57,9 +58,9 @@ export default class PostReplyHeader extends React.Component {
                     )}
                     on={['hover']}
                 />
-                <Label color='blue' size='small' basic as='a' style={{marginLeft: '0.5em'}}>
-                    <Icon name='thumbs up' color='blue' />{votes}&nbsp;
-                </Label>
+                <PostVotes
+                  target={reply}
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>

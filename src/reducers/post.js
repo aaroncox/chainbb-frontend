@@ -9,7 +9,9 @@ const initialState = {
   processing: {
     errors: {},
     votes: []
-  }
+  },
+  votes: {},
+  live: {},
 }
 
 function log10(str) {
@@ -37,6 +39,8 @@ export const repLog10 = rep2 => {
 
 export default function post(state = initialState, action) {
   let authors = state.authors;
+  let votes = state.votes;
+  let live = state.live;
   switch(action.type) {
     case types.POST_LOAD_RESOLVED:
       return Object.assign({}, state, action.payload)
@@ -67,6 +71,22 @@ export default function post(state = initialState, action) {
       return Object.assign({}, state, {
         responses: action.payload
       })
+    case types.POST_LOAD_LIVE_RESOLVED:
+      live[[action.payload.author, action.payload.permlink].join('/')] = action.payload.data
+      return Object.assign({}, state, { live })
+    case types.POST_REMOVE_LIVE:
+      delete live[[action.payload.author, action.payload.permlink].join('/')]
+      delete votes[[action.payload.author, action.payload.permlink].join('/')]
+      return Object.assign({}, state, { live });
+    case types.POST_LOAD_VOTES_RESOLVED:
+      let { author, data, permlink } = action.payload;
+      let id = [author, permlink].join('/')
+      data = data.map((vote) => {
+        vote['rshares'] = parseInt(vote['rshares'], 10)
+        return vote
+      })
+      votes[id] = data;
+      return Object.assign({}, state, { votes });
     case types.POST_RESET_STATE:
       return initialState
     case types.POST_SUBMIT_ERROR:
