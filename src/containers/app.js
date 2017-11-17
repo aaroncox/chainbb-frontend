@@ -54,7 +54,7 @@ const App = () => (
         <GlobalNotice />
         <Container>
           {/* <Route exact path="/" component={IndexLayout} /> */}
-          <Route exact path="/" component={ForumsLayout} />
+          <Route exact path="/" render={(props) => <Redirect to="/forums"/>}/>
           <Route path="/@:username" component={Account} />
           <Route path="/create/forum" component={ForumCreateLayout} />
           <Route path="/feed" component={FeedLayout} />
