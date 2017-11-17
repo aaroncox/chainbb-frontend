@@ -32,7 +32,6 @@ module.exports = {
         'bellyrub',
         'besttocome215',
         'bierkaart',
-        'binkley',
         'biskopakon',
         'blackwidow7',
         'blimbossem',
