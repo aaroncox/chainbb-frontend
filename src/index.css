@@ -109,7 +109,6 @@
 }
 
 .thread-post p,
-.thread-post blockquote,
 .thread-post ul,
 .thread-post ol,
 .thread-post dl,
@@ -118,6 +117,13 @@
   margin-top: 0;
   margin-bottom: 16px;
 }
+
+.thread-post blockquote {
+  border-left: 0.25em solid #d4d4d5;
+  margin: 0;
+  padding-left: 1em;
+}
+
 
 .thread-post pre {
   font: 12px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
