@@ -5,7 +5,7 @@ const fallback = {
     name: 'unknown',
     url: 'https://steemit.com',
     pages: ['account', 'comment'],
-    version: 'unknown',
+    version: 'x.x.x',
 }
 
 const platforms = [
@@ -44,11 +44,13 @@ const platforms = [
 export default class PlatformLink extends React.Component {
     platform = (post) => {
         const apptag = post.json_metadata.app
-        const [ id, version ] = apptag.split('/')
-        const platform = platforms.find(o => o.id === id)
-        if(platform) {
-            platform['version'] = version
-            return platform
+        if(apptag) {
+          const [ id, version ] = apptag.split('/')
+          const platform = platforms.find(o => o.id === id)
+          if(platform) {
+              platform['version'] = version
+              return platform
+          }
         }
         return fallback
     }
