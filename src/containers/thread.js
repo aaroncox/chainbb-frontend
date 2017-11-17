@@ -23,7 +23,7 @@ class Thread extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = Object.assign({}, props.match.params, { page: 1 })
+    this.state = Object.assign({}, props.params, { page: 1 })
   }
 
   componentWillMount() {
@@ -41,9 +41,23 @@ class Thread extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.permlink !== this.state.permlink) {
-      this.state = Object.assign({}, nextProps.match.params, { page: 1 });
-      this.fetchPost(nextProps.match.params);
+    const { hash } = location;
+    const regexPage = /#comments-page-(\d+)+$/
+    if (!hash && this.state.page && this.state.page > 1) {
+      this.setState({page: 1})
+    }
+    if (hash) {
+      let matchesPage = hash.match(regexPage)
+      if(matchesPage) {
+        let page = parseInt(matchesPage[1], 10)
+        if(page !== this.state.page) {
+          this.changePage(page)
+        }
+      }
+    }
+    if (nextProps.params.permlink !== this.state.permlink) {
+      this.state = Object.assign({}, nextProps.params, { page: 1 });
+      this.fetchPost(nextProps.params);
     }
   }
 
@@ -143,26 +157,28 @@ class Thread extends React.Component {
         pages = Math.ceil(responses.length / perPage),
         postForm = false
     let comments_nav = (
-      <Grid id={(page ? `comments-page-${page}` : '')}>
-        <Grid.Row verticalAlign='middle'>
-          <Grid.Column className='mobile hidden' width={4}>
-            <Header textAlign='center' size='huge' style={{padding: '0.9em 0'}}>
-              Comments ({responses.length})
-              <Header.Subheader>
-                Page {page} of {pages}
-              </Header.Subheader>
-            </Header>
-          </Grid.Column>
-          <Grid.Column mobile={16} tablet={12} computer={12}>
-            <Paginator
-              page={page}
-              perPage={perPage}
-              total={responses.length}
-              callback={this.changePage}
-              />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Segment basic>
+        <Grid id={(page ? `comments-page-${page}` : '')}>
+          <Grid.Row verticalAlign='middle'>
+            <Grid.Column className='mobile hidden' width={8}>
+              <Header>
+                Comments ({responses.length})
+                <Header.Subheader>
+                  Page {page} of {pages}
+                </Header.Subheader>
+              </Header>
+            </Grid.Column>
+            <Grid.Column mobile={16} tablet={8} computer={8}>
+              <Paginator
+                page={page}
+                perPage={perPage}
+                total={responses.length}
+                callback={this.changePage}
+                />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
     )
     let postFormHeader = (
       <PostFormHeader
@@ -208,27 +224,22 @@ class Thread extends React.Component {
             <meta property="og:description" content={`Posted by ${content.author} on ${content.created} UTC.`} />
         </Helmet>
         <Post
+          action={this.state.action}
           page={page}
           changePage={this.changePage}
           scrollToPost={this.scrollToPost}
           { ...this.props }/>
-        <Divider></Divider>
         { comments_nav }
-        <Divider horizontal>Page {page}</Divider>
         <Response
           page={page}
           perPage={perPage}
           changePage={this.changePage}
           scrollToPost={this.scrollToPost}
           { ...this.props } />
-        <Divider horizontal id='comments-new'>Page {page}</Divider>
         { comments_nav }
         <Divider />
         <Grid>
           <Grid.Row>
-            <Grid.Column className='mobile hidden' width={4}>
-
-            </Grid.Column>
             <Grid.Column mobile={16} tablet={12} computer={12}>
               {postForm}
             </Grid.Column>

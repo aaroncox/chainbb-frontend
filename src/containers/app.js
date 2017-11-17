@@ -13,7 +13,7 @@ import ForumLayout from '../components/layouts/forum'
 import ForumCreateLayout from '../components/layouts/forum/create'
 import ForumsLayout from '../components/layouts/forums'
 import RepliesLayout from '../components/layouts/replies'
-import Thread from '../containers/thread'
+import ThreadLayout from '../components/layouts/thread'
 import TopicLayout from '../components/layouts/topic'
 
 import BreadcrumbMenu from '../components/global/breadcrumb'
@@ -64,7 +64,7 @@ const App = () => (
           <Route path="/forum/:id" render={(props) => <Redirect to={`/f/${props.match.params.id}`}/>}/>
           <Route path="/replies" component={RepliesLayout} />
           <Route path="/topic/:category" component={TopicLayout} />
-          <Route path="/:category/@:author/:permlink" component={Thread} />
+          <Route path="/:category/@:author/:permlink/:action?" component={ThreadLayout} />
         </Container>
         <BreadcrumbMenu />
         <FooterMenu />

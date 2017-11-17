@@ -8,7 +8,6 @@ import * as preferenceActions from '../../actions/preferenceActions'
 
 import { Dimmer, Grid, Loader } from 'semantic-ui-react'
 import PostContent from './post/content'
-import PostSidebar from './post/sidebar'
 
 import "./post/styles.css"
 
@@ -21,18 +20,10 @@ class Post extends React.Component {
               <Loader size='large' content='Loading Post...'/>
             </Dimmer>
           </Grid.Column>
-        ),
-        sidebar = null
+        )
     if(this.props.post.content) {
-      sidebar = (
-        <Grid.Column className='mobile hidden' width={4}>
-          <PostSidebar
-            op={true}
-            { ...this.props } />
-        </Grid.Column>
-      )
       display = (
-        <Grid.Column mobile={16} tablet={12} computer={12}>
+        <Grid.Column mobile={16} tablet={16} computer={16}>
           <PostContent
             op={true}
             content={this.props.post.content}
@@ -44,7 +35,6 @@ class Post extends React.Component {
             <div id={this.props.post.content._id}>
               <Grid>
                 <Grid.Row>
-                  {sidebar}
                   {display}
                 </Grid.Row>
               </Grid>

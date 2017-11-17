@@ -3,8 +3,6 @@ import React from 'react';
 import { Segment } from 'semantic-ui-react'
 
 import VoteButton from './button/vote'
-import VoterAvatars from '../vote/avatars.js'
-import VoterList from '../vote/list.js'
 
 export default class PostControls extends React.Component {
 
@@ -21,26 +19,7 @@ export default class PostControls extends React.Component {
   render() {
     let data = this.props.post
     let post = this.props.target
-    let votes = (post && post.votes) ? post.votes : []
-    let accounts = Object.keys(votes).filter((k) => votes[k] !== 0).sort((a,b) => votes[b]-votes[a])
-    let extra = accounts.length - 10
     let processing = data.processing
-    let voters = (
-          <VoterAvatars
-            accounts={accounts}
-            votes={votes}
-          />
-        )
-    let moreVoters = ''
-    if(extra > 0) {
-      moreVoters = (
-        <VoterList
-          count={extra}
-          accounts={accounts}
-          votes={votes}
-        />
-      )
-    }
     const button = (
       <VoteButton
         account={this.props.account}
@@ -58,12 +37,8 @@ export default class PostControls extends React.Component {
       return button
     }
     return (
-      <Segment basic clearing attached textAlign='right'>
+      <Segment secondary basic clearing attached textAlign='right'>
         {button}
-        <div className="ui mini images" style={{display: 'inline'}}>
-          {voters}
-        </div>
-        {moreVoters}
       </Segment>
     )
   }

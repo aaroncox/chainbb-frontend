@@ -2,17 +2,16 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Noty from 'noty';
 
-import { Link } from 'react-router-dom'
 import { Button, Divider, Header, Popup, Segment } from 'semantic-ui-react'
 
 import MarkdownViewer from '../../../utils/MarkdownViewer';
 import PostControls from './controls'
+
 import PostForm from '../../../containers/post/form'
 import PostFormHeader from './form/header'
-import PlatformLink from '../../../utils/link/platform'
-import TimeAgo from 'react-timeago'
 import UserAvatar from '../account/avatar'
 import AccountLink from '../account/link'
+import PostTitle from './title'
 
 export default class PostContent extends React.Component {
 
@@ -80,9 +79,7 @@ export default class PostContent extends React.Component {
     let post = this.props.content,
         postContent = false,
         postControls = false,
-        postFooter = false,
         quote = this.props.quote,
-        title = false,
         postFormHeader = (
           <PostFormHeader
             title='Leave a Reply'
@@ -185,32 +182,6 @@ export default class PostContent extends React.Component {
         </Segment>
       )
     }
-    if(post.depth === 0) {
-      let tags = false
-      if(post.json_metadata && post.json_metadata.tags && typeof Array.isArray(post.json_metadata.tags)) {
-        tags = post.json_metadata.tags.slice(0,5).map((tag, i) => <span key={i}>
-          {!!i && " • "}
-          <Link to={`/topic/${tag}`}>
-            #{tag}
-          </Link>
-        </span>)
-      }
-      title = (
-        <Segment style={{ borderTop: '2px solid #2185D0' }} secondary attached stacked={(this.props.op && this.props.page !== 1)}>
-          <Header size='huge'>
-            <h1 style={{margin: 0}}>
-              {post.title}
-            </h1>
-            <Header.Subheader>
-            {'↳ '}
-            tagged
-            {' '}
-            {tags}
-            </Header.Subheader>
-          </Header>
-        </Segment>
-      )
-    }
     if(!this.props.op || (this.props.op && this.props.page === 1) || this.props.preview) {
       let postHeader = (
         <Header size='small' className='mobile only'>
@@ -237,36 +208,25 @@ export default class PostContent extends React.Component {
         postControls = (
           <PostControls
             target={post}
+            editButton={editButton}
+            postButton={postButton}
             { ...this.props }
             />
-        )
-        postFooter = (
-          <Segment basic clearing secondary attached='bottom'>
-            {postButton}
-            {editButton}
-            <Link to={`#${post._id}`}>
-              Posted <TimeAgo date={`${post.created}Z`} />
-            </Link>
-            <br/>
-            <small>
-              via
-              {' '}
-              <PlatformLink platform={post.json_metadata.app} />
-            </small>
-          </Segment>
         )
       }
     }
     return (
       <div>
-        {title}
+        <PostTitle
+            content={post}
+            {...this.props}
+        />
         {(editForm)
           ? (editForm)
           : (
             <div>
               {postContent}
               {postControls}
-              {postFooter}
             </div>
           )
         }
