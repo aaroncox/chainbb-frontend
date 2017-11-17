@@ -70,22 +70,14 @@ class Response extends React.Component {
       let formId = 0
       if(count > 0) {
         display = responses.map((post, index) => {
-          let account = (
-                <Segment basic className="thread-author center aligned">
-                  <img alt={post.author} src={`https://img.steemconnect.com/@${post.author}?size=80`} className="ui centered spaced rounded bordered image" />
-                  <Header>
-                    <AccountLink username={post.author} />
-                  </Header>
-                </Segment>
-              ),
-              hidden = (post.net_votes < 0),
+          let hidden = (post.net_votes < 0),
               parent_post = this.getParent(post),
               quote = ''
           const isBot = GLOBAL.BOTS.indexOf(post.author) >= 0
           if(parent_post['_id']) {
             quote = (
               <div>
-                <Segment padded>
+                <Segment padded stacked='piled' style={{marginBottom: '2em'}}>
                   <Header size='small'>
                     <AccountLink username={parent_post.author} />
                     {' '}
@@ -108,8 +100,6 @@ class Response extends React.Component {
                       <MarkdownViewer formId={formId + '-viewer'} text={parent_post.body} jsonMetadata={jsonMetadata} large highQualityPost={high_quality_post}  />
                   </PostQuote>
                 </Segment>
-                <Divider hidden></Divider>
-                <Divider hidden></Divider>
               </div>
             )
           }
@@ -142,10 +132,7 @@ class Response extends React.Component {
             )
           }
           return <Grid.Row key={index} id={post._id}>
-                  <Grid.Column className='mobile hidden' width={4}>
-                    {account}
-                  </Grid.Column>
-                  <Grid.Column mobile={16} tablet={12} computer={12}>
+                  <Grid.Column mobile={16} tablet={16} computer={16}>
                     <PostContent
                       content={post}
                       op={false}
