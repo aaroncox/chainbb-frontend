@@ -56,6 +56,7 @@ class PostVotes extends React.Component {
     const votes = allVotes[id]
     const live = allLive[id]
     if(live && votes) {
+      const declined_payout = (live.max_accepted_payout === '0.000 SBD')
       const pending_payout_value = parseFloat(live.pending_payout_value).toFixed(3)
       count = votes.length
       history = (
@@ -71,15 +72,42 @@ class PostVotes extends React.Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell>pending reward</Table.Cell>
-              <Table.Cell>{pending_payout_value}</Table.Cell>
+              <Table.Cell>
+                {(declined_payout)
+                  ? (
+                    <span>
+                      <strike>{pending_payout_value}</strike> (declined)
+                    </span>
+                  )
+                  : pending_payout_value
+                  }
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>author reward</Table.Cell>
-              <Table.Cell>{(pending_payout_value * 0.75).toFixed(3)}</Table.Cell>
+              <Table.Cell>
+                {(declined_payout)
+                  ? (
+                    <span>
+                      <strike>{(pending_payout_value * 0.75).toFixed(3)}</strike> (declined)
+                    </span>
+                  )
+                  : (pending_payout_value * 0.75).toFixed(3)
+                }
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>curation reward</Table.Cell>
-              <Table.Cell>{(pending_payout_value * 0.25).toFixed(3)}</Table.Cell>
+              <Table.Cell>
+                {(declined_payout)
+                  ? (
+                    <span>
+                      <strike>{(pending_payout_value * 0.25).toFixed(3)}</strike> (declined)
+                    </span>
+                  )
+                  : (pending_payout_value * 0.25).toFixed(3)
+                }
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>rshares (total)</Table.Cell>
