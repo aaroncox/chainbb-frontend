@@ -8,10 +8,28 @@ import { Link } from 'react-router-dom'
 class Sidebar extends React.Component {
   render() {
     // const forums = this.props.forums;
-    const { account, section } = this.props
+    const { account, forum, section } = this.props
     const { isUser } = account
     let userMenu = false
     let requestForum = false
+    let forumMenu = false
+    if(section === 'thread' && forum && forum.target) {
+      forumMenu = (
+        <Link to={`/f/${forum.target._id}`}>
+          <Segment color='blue' inverted>
+            <Header size='small'>
+              <Icon name='arrow circle left'/>
+              <Header.Content>
+                <Header.Subheader style={{color: '#ececec'}}>
+                  Posted in
+                </Header.Subheader>
+                /f/{forum.target._id}
+              </Header.Content>
+            </Header>
+          </Segment>
+        </Link>
+      )
+    }
     requestForum = (
         <Segment basic textAlign='center'>
             <Header size='small'>
@@ -102,6 +120,7 @@ class Sidebar extends React.Component {
     }
     return (
       <div>
+        {forumMenu}
         {userMenu}
         <Menu vertical fluid color='blue' size='small'>
           <Link className={`item ${(section && section === 'forums') ? 'active' : ''}`} to='/forums'>
@@ -119,6 +138,7 @@ class Sidebar extends React.Component {
 function mapStateToProps(state, ownProps) {
   return {
     account: state.account,
+    forum: state.forum,
     subscriptions: state.subscriptions
   }
 }
