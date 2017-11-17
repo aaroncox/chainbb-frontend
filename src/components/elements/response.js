@@ -15,6 +15,7 @@ import AccountLink from './account/link'
 import MarkdownViewer from '../../utils/MarkdownViewer';
 import PostContent from './post/content'
 import Response404 from './response/404'
+import PostQuote from './post/quote'
 
 class Response extends React.Component {
 
@@ -103,8 +104,9 @@ class Response extends React.Component {
                       <Icon name='toggle up' />
                       Jump to Original
                   </Label>
-
-                  <MarkdownViewer formId={formId + '-viewer'} text={parent_post.body} jsonMetadata={jsonMetadata} large highQualityPost={high_quality_post}  />
+                  <PostQuote>
+                      <MarkdownViewer formId={formId + '-viewer'} text={parent_post.body} jsonMetadata={jsonMetadata} large highQualityPost={high_quality_post}  />
+                  </PostQuote>
                 </Segment>
                 <Divider hidden></Divider>
                 <Divider hidden></Divider>
