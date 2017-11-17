@@ -34,7 +34,7 @@ export default class PostVoteChartRewards extends React.Component {
     return color;
   }
   componentWillReceiveProps(nextProps) {
-    if(!_.isEqual(nextProps.votes, this.state.votes)) {
+    if(nextProps.votes && this.state.votes && nextProps.votes.lenth !== this.state.votes.lenth) {
       const { votes } = nextProps
       this.setState({
         votes,
