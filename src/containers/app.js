@@ -24,7 +24,7 @@ import GlobalNotice from '../components/global/notice'
 import './app.css'
 import '../../node_modules/noty/lib/noty.css'
 
-steem.config.set('websocket', 'wss://rpc.buildteam.io')
+steem.api.setOptions({ url: 'https://api.steemit.com' });
 
 const App = () => (
     <BrowserRouter history={browserHistory}>
