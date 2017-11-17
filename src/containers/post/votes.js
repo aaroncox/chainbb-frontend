@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import TimeAgo from 'react-timeago'
 
-import { Dimmer, Divider, Grid, Header, Icon, Label, Loader, Modal, Popup, Segment, Table } from 'semantic-ui-react'
+import { Dimmer, Divider, Grid, Header, Icon, Label, Loader, Modal, Segment, Table } from 'semantic-ui-react'
 
 import * as postActions from '../../actions/postActions'
 
@@ -38,7 +38,8 @@ class PostVotes extends React.Component {
     const id = (target && target['_id']) ? target['_id'] : [target['author'], target['permlink']].join('/')
     const allLive = post.live
     const allVotes = post.votes
-    let count = (target.votes) ? Object.keys(target.votes).length : target.active_votes.length
+    const voteLength = (target.votes) ? Object.keys(target.votes).length : 0
+    let count = (voteLength > 0) ? voteLength : target.net_votes
     let details = false
     let table = false
     let loader = {
@@ -56,8 +57,33 @@ class PostVotes extends React.Component {
     const votes = allVotes[id]
     const live = allLive[id]
     if(live && votes) {
-      const declined_payout = (live.max_accepted_payout === '0.000 SBD')
-      const pending_payout_value = parseFloat(live.pending_payout_value).toFixed(3)
+      const {
+        beneficiaries,
+        last_payout,
+        max_accepted_payout,
+        pending_payout_value,
+        total_payout_value
+      } = live
+      const declined_payout = (max_accepted_payout === '0.000 SBD')
+      const payout_pending = (pending_payout_value !== '0.000 SBD')
+      const payout_value = parseFloat(((payout_pending) ? pending_payout_value : total_payout_value).split(" ")[0]).toFixed(3)
+      const payout_beneficiaries = (beneficiaries.length > 0) ? _.sumBy(beneficiaries, 'weight') / 100 : false
+      const total_vote_rshares = _.sumBy(votes, 'rshares')
+      const total_vote_weight = _.sumBy(votes, 'weight')
+      let distribution = {
+        'total': 100,
+        'author': 75,
+        'curation': 25,
+        'beneficiaries': 0
+      }
+      if(payout_beneficiaries) {
+        distribution['author'] -= payout_beneficiaries
+        distribution['beneficiaries'] += payout_beneficiaries
+      }
+      let rewards = {}
+      _.forOwn(distribution, function(weight, party) {
+        rewards[party] = (payout_value * (weight / 100)).toFixed(3)
+      });
       count = votes.length
       history = (
         <PostVoteTable
@@ -65,57 +91,63 @@ class PostVotes extends React.Component {
           target={target}
           votes={votes}
           status={status}
+          total_vote_rshares={total_vote_rshares}
+          total_vote_weight={total_vote_weight}
         />
       )
+      const totals = []
+      if(!payout_pending) {
+        totals.push((
+          <Table.Row>
+            <Table.Cell>
+              <small>
+                rewards distributed
+              </small>
+            </Table.Cell>
+            <Table.Cell>
+              <small>
+                {last_payout} UTC
+              </small>
+            </Table.Cell>
+          </Table.Row>
+        ))
+      }
+      _.forOwn(rewards, (reward, party) => {
+        totals.push((
+          <Table.Row>
+            <Table.Cell>
+              {party} rewards
+              {' '}
+              [{distribution[party]}%]
+            </Table.Cell>
+            <Table.Cell>
+              {(declined_payout)
+                ? (
+                  <span>
+                    <strike>{rewards[party]}</strike> (declined)
+                  </span>
+                )
+                : rewards[party]
+              }
+              {(payout_pending)
+                ? ' (pending)'
+                : false
+              }
+            </Table.Cell>
+          </Table.Row>
+        ))
+      })
       table = (
-        <Table definition>
+        <Table definition size='small'>
           <Table.Body>
-            <Table.Row>
-              <Table.Cell>pending reward</Table.Cell>
-              <Table.Cell>
-                {(declined_payout)
-                  ? (
-                    <span>
-                      <strike>{pending_payout_value}</strike> (declined)
-                    </span>
-                  )
-                  : pending_payout_value
-                  }
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>author reward</Table.Cell>
-              <Table.Cell>
-                {(declined_payout)
-                  ? (
-                    <span>
-                      <strike>{(pending_payout_value * 0.75).toFixed(3)}</strike> (declined)
-                    </span>
-                  )
-                  : (pending_payout_value * 0.75).toFixed(3)
-                }
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>curation reward</Table.Cell>
-              <Table.Cell>
-                {(declined_payout)
-                  ? (
-                    <span>
-                      <strike>{(pending_payout_value * 0.25).toFixed(3)}</strike> (declined)
-                    </span>
-                  )
-                  : (pending_payout_value * 0.25).toFixed(3)
-                }
-              </Table.Cell>
-            </Table.Row>
+            {totals}
             <Table.Row>
               <Table.Cell>rshares (total)</Table.Cell>
-              <Table.Cell><NumericLabel params={numberFormat}>{live.abs_rshares}</NumericLabel></Table.Cell>
+              <Table.Cell><NumericLabel params={numberFormat}>{total_vote_rshares}</NumericLabel></Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>weight (total)</Table.Cell>
-              <Table.Cell><NumericLabel params={numberFormat}>{live.total_vote_weight}</NumericLabel></Table.Cell>
+              <Table.Cell><NumericLabel params={numberFormat}>{total_vote_weight}</NumericLabel></Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>votes</Table.Cell>
@@ -126,11 +158,11 @@ class PostVotes extends React.Component {
       )
       details = (
         <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column>
+          <Grid.Row>
+            <Grid.Column width={6}>
               {table}
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={5}>
               <Segment basic clearing>
                 <PostVoteChartRewards
                   target={target}
@@ -139,7 +171,7 @@ class PostVotes extends React.Component {
                 />
               </Segment>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={5}>
               <Segment basic clearing>
                 <PostVoteChartWeight
                   target={target}
@@ -152,52 +184,39 @@ class PostVotes extends React.Component {
         </Grid>
       )
     }
-    if(count > 0) {
-      return (
-        <Modal
-          closeIcon={true}
-          color='blue'
-          onMount={this.handleOnOpen}
-          onClose={this.handleOnClose}
-          // open={(target.author == 'binkley')}
-          size='large'
-          trigger={(
-            <Label color='blue' size='small' basic as='a' style={{marginLeft: '0.5em'}}>
-              <Icon name='thumbs up' color='blue' />{count}&nbsp;
-            </Label>
-          )}
-          >
-          <Segment basic style={{marginTop: 0, minHeight: '200px'}}>
-            <Header icon='pie chart' style={{marginTop: 0}} content='Vote Information' />
-            <Modal.Content>
-              <Segment basic padded>
-                <Header>
-                  Post Details: {id}
-                  <Header.Subheader>
-                    This information was last updated <TimeAgo date={Date()} />.
-                  </Header.Subheader>
-                </Header>
-                {details}
-                <Divider horizontal>Vote History</Divider>
-                {history}
-              </Segment>
-            </Modal.Content>
-          </Segment>
-        </Modal>
-      )
-    }
+    const { action, author, permlink } = this.props.match.params
+    const defaultOpen = (action === 'votes' && author === target.author && permlink === target.permlink)
     return (
-      <Popup
+      <Modal
+        closeIcon={true}
+        color='blue'
+        defaultOpen={defaultOpen}
+        onMount={this.handleOnOpen}
+        onClose={this.handleOnClose}
+        size='large'
         trigger={
-          <Label size='small' basic as='a' style={{marginLeft: '0.5em', color: '#d4d4d5'}}>
-            <Icon name='thumbs up' />{count}&nbsp;
+          <Label color='blue' size='small' basic as='a' style={{marginLeft: '0.5em'}}>
+            <Icon name='thumbs up' color='blue' />{count}&nbsp;
           </Label>
         }
-        position='bottom center'
-        inverted
-        content='This post has no votes.'
-        basic
-      />
+        >
+        <Segment basic style={{marginTop: 0, minHeight: '200px'}}>
+          <Header icon='pie chart' style={{marginTop: 0}} content='Vote Information' />
+          <Modal.Content>
+            <Segment basic padded>
+              <Header>
+                Post Details: {id}
+                <Header.Subheader>
+                  This information was last updated <TimeAgo date={Date()} />.
+                </Header.Subheader>
+              </Header>
+              {details}
+              <Divider horizontal>Vote History</Divider>
+              {history}
+            </Segment>
+          </Modal.Content>
+        </Segment>
+      </Modal>
     )
   }
 }

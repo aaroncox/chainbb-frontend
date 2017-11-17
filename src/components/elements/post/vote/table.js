@@ -74,15 +74,15 @@ export default class PostVoteTable extends React.Component {
       shortFormatMinValue: 1000
     };
     const { column, data, direction } = this.state
-    const { live } = this.props
-    const pending_payout_value = parseFloat(live.pending_payout_value).toFixed(3)
-    const pending_curation_value = (pending_payout_value * 0.25).toFixed(3)
-    const total_vote_weight = live.total_vote_weight
+    const { live, total_vote_weight } = this.props
+    const payout_pending = (live.pending_payout_value !== '0.000 SBD')
+    const payout_value = parseFloat(((payout_pending) ? live.pending_payout_value : live.total_payout_value).split(" ")[0]).toFixed(3)
+    const pending_curation_value = (payout_value * 0.25).toFixed(3)
     let rows = false
     if(data) {
       rows = data.map((vote) => {
         const authorReward = this.estimate(vote.rshares)
-        const authorPercent = authorReward / pending_payout_value
+        const authorPercent = authorReward / payout_value
         const curationPercent = vote.weight / total_vote_weight
         const curationReward = (curationPercent * pending_curation_value).toFixed(3)
         return (
