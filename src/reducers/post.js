@@ -56,7 +56,12 @@ export default function post(state = initialState, action) {
       authors[action.payload.account] = { replies, totalReplies };
       authors[action.payload.account].replies.forEach((data, index) => {
           if (data.forum) {
-              authors[action.payload.account]['replies'][index]['forum'] = ForumReducer.setProgression(data.forum)
+              const c = authors[action.payload.account]['replies'][index]
+              const r = c['reply']
+              const p = c['parent']
+              authors[action.payload.account]['replies'][index]['reply']['forum'] = ForumReducer.setProgression(data.forum)
+              authors[action.payload.account]['replies'][index]['reply']['url'] = r['url'].replace(`/${r.category}/`, `/${data.forum._id}/`)
+              authors[action.payload.account]['replies'][index]['parent']['url'] = p['url'].replace(`/${r.category}/`, `/${data.forum._id}/`)
           }
       })
       return Object.assign({}, state, { authors });
