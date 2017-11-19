@@ -98,7 +98,7 @@ class PostVotes extends React.Component {
       const totals = []
       if(!payout_pending) {
         totals.push((
-          <Table.Row>
+          <Table.Row key='distributed'>
             <Table.Cell>
               <small>
                 rewards distributed
@@ -114,7 +114,7 @@ class PostVotes extends React.Component {
       }
       _.forOwn(rewards, (reward, party) => {
         totals.push((
-          <Table.Row>
+          <Table.Row key={party}>
             <Table.Cell>
               {party} rewards
               {' '}
