@@ -39,7 +39,7 @@ class PostVotes extends React.Component {
     const allLive = post.live
     const allVotes = post.votes
     const voteLength = (target.votes) ? Object.keys(target.votes).length : 0
-    let count = (voteLength > 0) ? voteLength : target.net_votes
+    let count = voteLength
     let details = false
     let table = false
     let loader = {
