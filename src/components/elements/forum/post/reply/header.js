@@ -12,7 +12,6 @@ export default class PostReplyHeader extends React.Component {
   render() {
     const { topic } = this.props
     const { parent, reply } = topic
-
     return (
         <Segment style={{ borderTop: '2px solid #2185D0' }} secondary attached stacked={(this.props.op && this.props.page !== 1)}>
           <Grid>
@@ -25,7 +24,7 @@ export default class PostReplyHeader extends React.Component {
                     {'↳ '}
                     <TimeAgo date={`${reply.created}Z`} />
                     {' • '}
-                    <Link to={`/${reply.root_namespace || reply.category}/@${reply.root_post || parent._id}`}>
+                    <Link to={`${reply.url}`}>
                       {parent.root_title}
                     </Link>
                   </Header.Subheader>
