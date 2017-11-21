@@ -8,6 +8,7 @@ import AccountAvatar from '../account/avatar'
 import AccountLink from '../account/link'
 import Paginator from './post/paginator'
 import ForumPostModeration from './post/moderation'
+import PlatformLink from '../../../utils/link/platform'
 
 export default class ForumPost extends React.Component {
   constructor(props) {
@@ -122,7 +123,7 @@ export default class ForumPost extends React.Component {
                     {' • '}
                     <AccountLink username={topic.author} />
                     {' • '}
-                    #{topic.category}
+                    <PlatformLink post={topic} />
                     {paginator}
                   </Header.Subheader>
                 </Header.Content>
