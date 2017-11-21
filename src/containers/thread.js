@@ -240,7 +240,7 @@ class Thread extends React.Component {
         <Divider />
         <Grid>
           <Grid.Row>
-            <Grid.Column mobile={16} tablet={12} computer={12}>
+            <Grid.Column mobile={16} tablet={16} computer={16}>
               {postForm}
             </Grid.Column>
           </Grid.Row>
