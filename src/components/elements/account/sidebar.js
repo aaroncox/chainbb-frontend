@@ -62,6 +62,10 @@ export default class AccountSidebar extends React.Component {
                 <Icon name='external' />
                 steemdb.com
               </a>
+              <a href={`https://steemd.com/@${username}`} target='_blank' className='item'>
+                <Icon name='external' />
+                steemd.com
+              </a>
             </Dropdown.Menu>
           </Dropdown>
         </Menu>
