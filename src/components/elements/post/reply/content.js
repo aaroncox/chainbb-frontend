@@ -95,16 +95,16 @@ export default class PostReplyContent extends React.Component {
                     title = false,
                     postFormHeader = (
                         <PostFormHeader
-            title='Leave a Reply'
-            subtitle=''
-            />
+                          title='Leave a Reply'
+                          subtitle=''
+                        />
                     ),
                     editFormHeader = (
                         <PostFormHeader
-            title='Edit your Post'
-            color='green'
-            subtitle=''
-            />
+                          title='Edit your Post'
+                          color='green'
+                          subtitle=''
+                        />
                     ),
                     responding = ( this.state && this.state.responding ) ? this.state.responding : false,
                     editing = ( this.state && this.state.editing ) ? this.state.editing : false,
