@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { goToTop } from 'react-scrollable-anchor'
 import _ from 'lodash'
 
-import { Dimmer, Loader, Grid, Header, Segment  } from 'semantic-ui-react'
+import { Button, Dimmer, Loader, Grid, Header, Segment  } from 'semantic-ui-react'
 
 import * as accountActions from '../../actions/accountActions'
 import * as breadcrumbActions from '../../actions/breadcrumbActions'
@@ -62,6 +62,15 @@ class Feed extends React.Component {
       this.props.actions.setBreadcrumb([])
     }
 
+    refresh() {
+      this.setState({
+        ids: [],
+        items: [],
+        loaded: false,
+      });
+      this.props.actions.getState(`/@${this.props.account.name}/feed`)
+    }
+
     render() {
       let loaded = this.state.loaded,
           loader = {
@@ -100,6 +109,22 @@ class Feed extends React.Component {
             <title>Activity Feed</title>
           </Helmet>
           <FeedTitle />
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={8}>
+                <Button
+                  basic
+                  color='purple'
+                  content='Refresh'
+                  icon='refresh'
+                  onClick={this.refresh.bind(this)}
+                />
+              </Grid.Column>
+              <Grid.Column width={8}>
+
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Segment attached='top' secondary>
             <Grid>
               <Grid.Row>

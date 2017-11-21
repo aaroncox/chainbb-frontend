@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 
-import { Grid, Header, Icon, Segment } from 'semantic-ui-react'
+import { Button, Grid, Header, Icon, Segment } from 'semantic-ui-react'
 import { goToTop } from 'react-scrollable-anchor'
 
 import * as accountActions from '../../actions/accountActions'
@@ -110,7 +110,13 @@ class Replies extends React.Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={8}>
-
+              <Button
+                basic
+                color='purple'
+                content='Refresh'
+                icon='refresh'
+                onClick={() => this.changePage(1)}
+              />
             </Grid.Column>
             <Grid.Column width={8}>
               <Paginator
