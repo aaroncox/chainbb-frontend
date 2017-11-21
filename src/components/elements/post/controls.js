@@ -39,6 +39,8 @@ export default class PostControls extends React.Component {
     return (
       <Segment secondary basic clearing attached textAlign='right'>
         {button}
+        {this.props.editButton}
+        {this.props.postButton}
       </Segment>
     )
   }
