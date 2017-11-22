@@ -45,6 +45,9 @@ const platforms = [
 
 export default class PlatformLink extends React.Component {
   platform = (post) => {
+    if(!post || !post.json_metadata) {
+      return fallback
+    }
     const apptag = post.json_metadata.app
     if(apptag) {
       const [ id, version ] = apptag.split('/')
@@ -69,9 +72,11 @@ export default class PlatformLink extends React.Component {
       url = this.canonical(platform, post)
       if(url) {
         link = <a rel='nofollow' alt={`${platform.name}`} href={`${url}`}>{platform.name}/{platform.version}</a>
-      } else {
+      } else if(post.json_metadata) {
         const apptag = post.json_metadata.app
         link = <span>{ (apptag) ? apptag : platform.name }</span>
+      } else {
+        link = <span>Unknown</span>
       }
     }
     return(link);
