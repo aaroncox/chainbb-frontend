@@ -29,16 +29,8 @@ export default class PostPreview extends React.Component {
   }
 
   render() {
-    let display = null,
-        sidebar = null
+    let display = null
     if(this.state.post.content) {
-      sidebar = (
-        <Grid.Column className='mobile hidden' width={4}>
-          <PostSidebar
-            preview={true}
-            { ...this.state } />
-        </Grid.Column>
-      )
       display = (
         <Grid.Column mobile={16} tablet={12} computer={12}>
           <PostContent
@@ -51,8 +43,8 @@ export default class PostPreview extends React.Component {
 
     return (
       <Modal
-        size="fullscreen"
         closeIcon={true}
+        size='large'
         trigger={
           <Button color='purple' onClick={this.handleModal}>
             Preview
@@ -62,7 +54,8 @@ export default class PostPreview extends React.Component {
           <Container>
             <Grid>
               <Grid.Row>
-                {sidebar}
+                <Grid.Column className='mobile hidden' width={4}>
+                </Grid.Column>
                 {display}
               </Grid.Row>
             </Grid>
