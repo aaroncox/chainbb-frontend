@@ -79,6 +79,7 @@ export default class PostContent extends React.Component {
     let post = this.props.content,
         postContent = false,
         postControls = false,
+        postTitle = false,
         quote = this.props.quote,
         postFormHeader = (
           <PostFormHeader
@@ -213,18 +214,21 @@ export default class PostContent extends React.Component {
             { ...this.props }
             />
         )
+        postTitle = (
+          <PostTitle
+              content={post}
+              {...this.props}
+          />
+        )
       }
     }
     return (
       <div>
-        <PostTitle
-            content={post}
-            {...this.props}
-        />
         {(editForm)
           ? (editForm)
           : (
             <div>
+              {postTitle}
               {postContent}
               {postControls}
             </div>
