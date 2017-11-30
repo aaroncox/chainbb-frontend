@@ -27,8 +27,8 @@ export default class PostVoteTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      column: 'time',
-      data: _.sortBy(props.votes, ['time']).reverse(),
+      column: 'rshares',
+      data: _.sortBy(props.votes, ['rshares']).reverse(),
       direction: 'descending',
     }
   }
