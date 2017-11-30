@@ -81,6 +81,7 @@
 
 .thread-post .Markdown {
   font-size: 18px;
+  overflow-x: auto;
 }
 .thread-post img {
   max-width: 100%;
