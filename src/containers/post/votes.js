@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import TimeAgo from 'react-timeago'
 
-import { Dimmer, Divider, Grid, Header, Icon, Label, Loader, Modal, Segment, Table } from 'semantic-ui-react'
+import { Dimmer, Divider, Grid, Header, Icon, Label, Loader, Modal, Popup, Segment, Table } from 'semantic-ui-react'
 
 import * as postActions from '../../actions/postActions'
 
@@ -13,6 +13,7 @@ import PostVoteTable from '../../components/elements/post/vote/table'
 import PostVoteChartRewards from '../../components/elements/post/vote/chart/rewards'
 import PostVoteChartWeight from '../../components/elements/post/vote/chart/weight'
 import NumericLabel from '../../utils/NumericLabel';
+import AccountLink from '../../components/elements/account/link'
 
 class PostVotes extends React.Component {
   handleOnOpen = () => {
@@ -68,21 +69,30 @@ class PostVotes extends React.Component {
       const payout_pending = (pending_payout_value !== '0.000 SBD')
       const payout_value = parseFloat(((payout_pending) ? pending_payout_value : total_payout_value).split(" ")[0]).toFixed(3)
       const payout_beneficiaries = (beneficiaries.length > 0) ? _.sumBy(beneficiaries, 'weight') / 100 : false
+      const payout_value_post_curation = payout_value - (0.25 * payout_value)
       const total_vote_rshares = _.sumBy(votes, 'rshares')
       const total_vote_weight = _.sumBy(votes, 'weight')
       let distribution = {
         'total': 100,
-        'author': 75,
         'curation': 25,
-        'beneficiaries': 0
-      }
-      if(payout_beneficiaries) {
-        distribution['author'] -= payout_beneficiaries
-        distribution['beneficiaries'] += payout_beneficiaries
+        'author': 100,
+        'beneficiaries': 0,
       }
       let rewards = {}
+      let beneficiary_weights = {}
+      let beneficiary_rewards = {}
+      if(payout_beneficiaries) {
+        _.each(beneficiaries, (b) => {
+          beneficiary_weights[b.account] = parseFloat((b.weight / 100).toFixed(2))
+          beneficiary_rewards[b.account] = parseFloat((b.weight / 100).toFixed(2))
+          beneficiary_rewards[b.account] = (payout_value_post_curation * (b.weight / 10000)).toFixed(3)
+        })
+        distribution['beneficiaries'] += payout_beneficiaries
+        distribution['author'] -= payout_beneficiaries
+      }
       _.forOwn(distribution, function(weight, party) {
-        rewards[party] = (payout_value * (weight / 100)).toFixed(3)
+        const v = (party === 'total') ? payout_value : payout_value_post_curation
+        rewards[party] = (v * (weight / 100)).toFixed(3)
       });
       count = votes.length
       history = (
@@ -113,14 +123,56 @@ class PostVotes extends React.Component {
         ))
       }
       _.forOwn(rewards, (reward, party) => {
+        let subtable = false
+        if(party === 'beneficiaries') {
+          let account_rows = []
+          _.forOwn(beneficiary_rewards, (reward, account) =>
+            account_rows.push((
+              <Table.Row key={account}>
+                <Table.Cell>
+                  <AccountLink username={account} />
+                </Table.Cell>
+                <Table.Cell>
+                  {beneficiary_weights[account]}%
+                </Table.Cell>
+                <Table.Cell>
+                  {reward}
+                </Table.Cell>
+              </Table.Row>
+            )
+          ))
+          subtable = (
+            <Table size='small'>
+              <Table.Body>
+                {account_rows}
+              </Table.Body>
+            </Table>
+          )
+        }
         totals.push((
-          <Table.Row key={party}>
+          <Table.Row verticalAlign='top' key={party}>
             <Table.Cell>
-              {party} rewards
+              {party}
               {' '}
-              [{distribution[party]}%]
             </Table.Cell>
             <Table.Cell>
+              {distribution[party]}%
+            </Table.Cell>
+            <Table.Cell>
+              {(payout_pending)
+                ? (
+                  <Popup
+                    trigger={
+                      <Icon name='time' style={{marginRight: '0.5em'}} />
+                    }
+                    position='bottom center'
+                    inverted
+                    content='Pending'
+                    basic
+                  />
+                )
+                : false
+              }
               {(declined_payout)
                 ? (
                   <span>
@@ -129,29 +181,52 @@ class PostVotes extends React.Component {
                 )
                 : rewards[party]
               }
-              {(payout_pending)
-                ? ' (pending)'
-                : false
-              }
             </Table.Cell>
           </Table.Row>
         ))
+        if(subtable) {
+          totals.push((
+            <Table.Row key='subtable'>
+              <Table.Cell colSpan='3'>
+                {subtable}
+              </Table.Cell>
+            </Table.Row>
+          ))
+        }
       })
       table = (
-        <Table definition size='small'>
+        <Table size='small'>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell colSpan="10">
+                Estimated Reward Breakdown
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
           <Table.Body>
             {totals}
             <Table.Row>
-              <Table.Cell>rshares (total)</Table.Cell>
-              <Table.Cell><NumericLabel params={numberFormat}>{total_vote_rshares}</NumericLabel></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>weight (total)</Table.Cell>
-              <Table.Cell><NumericLabel params={numberFormat}>{total_vote_weight}</NumericLabel></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>votes</Table.Cell>
-              <Table.Cell>{count}</Table.Cell>
+              <Table.Cell colSpan="10" textAlign='center'>
+                Totaling
+                {' '}
+                <strong>
+                  <NumericLabel params={numberFormat}>{total_vote_rshares}</NumericLabel>
+                </strong>
+                {' '}
+                rshares,
+                {' '}
+                <strong>
+                  <NumericLabel params={numberFormat}>{total_vote_weight}</NumericLabel>
+                </strong>
+                {' '}
+                weight, and
+                {' '}
+                <strong>
+                  {count}
+                </strong>
+                {' '}
+                votes.
+              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
