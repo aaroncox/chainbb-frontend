@@ -93,7 +93,7 @@ export default class LoginModal extends React.Component {
         size='small'
         className='modal-warning'
       >
-        <Header icon='warning' content='Please use your use your keys responsibly.' />
+        <Header icon='warning' content='Please use your keys responsibly.' />
         <Modal.Content>
           <h4>As with all Steem powered applications, please be aware of what website you're on and if you trust the organization running it. Make sure you are only using your posting key and your active/owner keys remain safe (preferrably in a wallet or offline).</h4>
         </Modal.Content>
