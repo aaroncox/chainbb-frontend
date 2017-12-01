@@ -14,8 +14,8 @@ export default class PostTitle extends React.Component {
     let rootTitle = false
     if(this.props.op) {
       rootTitle = (
-        <Segment inverted color='blue' attached stacked={(this.props.page !== 1)}>
-          <Header size='huge'>
+        <Segment inverted color='blue' attached stacked={(this.props.page !== 1)} verticalAlign='top'>
+          <Header size='large'>
             <Icon name='comments' />
             <Header.Content as='h1'>
               <Link to={`/${(content.namespace) ? content.namespace : content.category}/@${content._id}`} style={{color: '#ececec'}}>
@@ -32,7 +32,7 @@ export default class PostTitle extends React.Component {
         <Segment secondary attached>
           <Grid>
             <Grid.Row verticalAlign='top'>
-              <Grid.Column tablet={8} computer={8} mobile={8}>
+              <Grid.Column tablet={8} computer={8} mobile={12}>
                 <Header size='medium'>
                   <AccountAvatar username={content.author} />
                   <AccountLink username={content.author} />
@@ -42,8 +42,9 @@ export default class PostTitle extends React.Component {
                   </Header.Subheader>
                 </Header>
               </Grid.Column>
-              <Grid.Column tablet={8} computer={8} mobile={8} textAlign='right' verticalAlign='middle'>
+              <Grid.Column tablet={8} computer={8} mobile={4} textAlign='right' verticalAlign='middle'>
                 <Popup
+                  className='mobile hidden'
                     trigger={(
                         <small>
                             <PlatformLink post={content} />
