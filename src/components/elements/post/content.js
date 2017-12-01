@@ -184,22 +184,8 @@ export default class PostContent extends React.Component {
       )
     }
     if(!this.props.op || (this.props.op && this.props.page === 1) || this.props.preview) {
-      let postHeader = (
-        <Header size='small' className='mobile only'>
-          <UserAvatar username={post.author} />
-          <Header.Subheader>
-            posted by
-          </Header.Subheader>
-          <AccountLink username={post.author} />
-          <Divider></Divider>
-        </Header>
-      )
-      if(this.props.hideAuthor) {
-        postHeader = false
-      }
       postContent = (
         <Segment attached clearing className='thread-post'>
-          {postHeader}
           {quote}
           <MarkdownViewer formId={'viewer'} text={post.body} jsonMetadata={{}} large highQualityPost={true}  />
           <Divider hidden></Divider>
