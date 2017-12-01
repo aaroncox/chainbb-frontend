@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Grid, Header, Input, Label, Popup, Segment } from 'semantic-ui-react'
+import { Button, Grid, Header, Input, Label, Popup, Segment, Table } from 'semantic-ui-react'
 import InputRange from 'react-input-range';
 import { throttle } from 'lodash'
 import { Form, Input as FormsyInput } from 'formsy-semantic-ui-react'
@@ -30,14 +30,14 @@ export default class VoteButtonOptions extends React.Component {
 
   handleOnChangeComplete = (value) => {
     const cleaned = Math.round(parseFloat(value) * 100) / 100
-    if(cleaned !== this.state.weight) {
+    if(cleaned !== this.props.weight) {
       this.onChange({'votePowerPost': cleaned})
     }
   }
 
   handleManualChange = (e, data) => {
     const value = parseFloat(data.value)
-    if(value >= 0 && value <=100) {
+    if(value >= -100 && value <=100 && value !== 0) {
       this.setState({'weight': Math.round(parseFloat(data.value) * 100) / 100})
     } else {
       this.setState({'weight': data.value})
@@ -46,7 +46,7 @@ export default class VoteButtonOptions extends React.Component {
 
   handleBlur = (e) => {
     const value = this.state.weight
-    if(value >= 0 && value <=100) {
+    if(value >= -100 && value <=100 && value !== 0) {
       this.onChange({'votePowerPost': value})
     }
   }
@@ -98,7 +98,9 @@ export default class VoteButtonOptions extends React.Component {
         <Grid divided columns={2}>
           <Grid.Column width={8}>
             <Segment basic attached style={{border: 'none'}}>
-              <Header dividing>Adjust your next vote&lsquo;s power</Header>
+              <Header dividing>
+                Adjust your next vote&lsquo;s power
+              </Header>
             </Segment>
             <Segment basic attached style={{border: 'none'}} textAlign='center'>
               <Form
@@ -123,7 +125,10 @@ export default class VoteButtonOptions extends React.Component {
                       if(parsed > 100) {
                         return false
                       }
-                      if(parsed < 0) {
+                      if(parsed < -100) {
+                        return false
+                      }
+                      if(parsed === 0) {
                         return false
                       }
                       return true
@@ -135,18 +140,12 @@ export default class VoteButtonOptions extends React.Component {
                   }}
                   errorLabel={ errorLabel }
                 />
-                <p>
-                  <strong>+{estimate}</strong> reward to author (estimated)
-                </p>
-                <p>
-                  <strong>-{cost}%</strong> for voting effectiveness
-                </p>
               </Form>
             </Segment>
             <Segment basic attached style={{border: 'none', minHeight: '59px'}}>
               <InputRange
                 maxValue={100}
-                minValue={0.01}
+                minValue={-100}
                 step={0.01}
                 value={this.state.weight}
                 onChange={this.handleOnChange}
@@ -154,6 +153,27 @@ export default class VoteButtonOptions extends React.Component {
               />
             </Segment>
             <Segment basic attached style={{border: 'none'}}>
+              <Table definition size='small'>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>
+                      Reward Adjustment (Estimated)
+                    </Table.Cell>
+                    <Table.Cell>
+                      {estimate > 0 ? '+' : ''}{estimate}
+
+                    </Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>
+                      Personal Voting Effectiveness
+                    </Table.Cell>
+                    <Table.Cell>
+                      {cost > 0 ? '-' : ''}{cost}%
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
               <p>Using more voting power increases the rewards to the author, but also increases the drain of your voting effectiveness.</p>
             </Segment>
           </Grid.Column>
@@ -170,7 +190,7 @@ export default class VoteButtonOptions extends React.Component {
             <Segment basic attached style={{border: 'none'}}>
               <Header dividing>Voting Budget</Header>
               <p>
-                While casting all votes with <strong>{this.state.weight}% voting power</strong>, approximiately <strong>~{budget} votes</strong> per day are possible while maintaining an average effectiveness of ~<strong>{effectiveness}</strong>.
+                While casting all votes with <strong>{this.state.weight}% voting power</strong>, approximiately <strong>~{budget < 0 ? budget * -1 : budget} votes</strong> per day are possible while maintaining an average effectiveness of ~<strong>{(effectiveness/100).toFixed(2)}%</strong>.
               </p>
             </Segment>
 

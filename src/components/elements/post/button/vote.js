@@ -40,10 +40,10 @@ export default class VoteButton extends React.Component {
         active = (post && typeof post.votes === 'object') ? (post.votes.hasOwnProperty(account.name) && post.votes[account.name] !== 0) : false,
         // -----------------------------
         // Button Properties
-        text = 'Vote',
+        text = `Vote`,
         icon = (this.props.error ? 'warning sign icon' : 'thumbs up' + (!active ? ' outline' : '')),
         onClick = this.props.error ? this.clearError : this.castVote,
-        color = (!active ? (this.props.error ? 'red' : 'blue') : 'purple'), // Blue if able to vote, Purple if voted, Red if error
+        color = 'blue',
         tooltip = `Click to cast your vote with ${weight}% of your voting power.`,
         adjuster = false,
         // Placeholder button until user is recognized / logged in
@@ -63,15 +63,21 @@ export default class VoteButton extends React.Component {
         )
     // If we have an active vote, changed text/tooltip and remove adjuster
     if(active) {
-      text = `${post.votes[account.name]/100}% Vote Cast`
+      color = 'purple'
+      text = `Voted ${post.votes[account.name]/100}%`
       tooltip = `Click again to remove your vote.`
       adjuster = false
     }
     // If an error has occured, change text/tooltip, remove adjuster and set active
     if(this.props.error) {
+      color = 'red'
       tooltip = this.props.error + ' - Click to dismiss this error and try again.'
       text = 'Error Voting'
       active = true
+    }
+    if(weight < 0) {
+      color = 'orange'
+      icon = 'thumbs down' + (!active ? ' outline' : '')
     }
     // If an account exists, setup the actual button
     if(this.props.account.isUser) {
@@ -85,8 +91,7 @@ export default class VoteButton extends React.Component {
           weight={weight}/>
       )
       // Set the display
-      display =
-      (
+      display = (
         <span>
           <Popup
             trigger={
