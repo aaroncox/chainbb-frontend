@@ -220,7 +220,7 @@ class Thread extends React.Component {
             <meta name="twitter:description" content={`Posted by ${content.author} on ${content.created} UTC.`} />
             <meta name="twitter:image:src" content={image} />
             <meta property="og:title" content={content.title} />
-            <meta property="og:url" content={`http://netify.chainbb.com/${(content.post && content.post.forum) ? content.post.forum._id : content.category}/@${content.author}/${content.permlink}`} />
+            <meta property="og:url" content={`http://chainbb.com/${(content.post && content.post.forum) ? content.post.forum._id : content.category}/@${content.author}/${content.permlink}`} />
             <meta property="og:description" content={`Posted by ${content.author} on ${content.created} UTC.`} />
         </Helmet>
         <Post
