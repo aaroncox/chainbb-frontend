@@ -11,10 +11,10 @@ export default class AccountAvatar extends React.Component {
     const className = this.props.className || "ui rounded floated left mini image";
     const image = (
       <Image
-        alt='{username}'
+        alt={username}
         bordered={false}
         className={className}
-        src={`https://img.steemconnect.com/@${username}?size=${size}`}
+        src={`https://steemitimages.com/u/${username}/avatar/large`}
         style={style}
       />
     )
