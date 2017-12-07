@@ -22,10 +22,11 @@ class AccountCard extends React.Component {
         content={
           <Card
             raised={true}
+            style={{width: '192px'}}
           >
             <AccountAvatar
               noPopup={true}
-              size={290}
+              size={192}
               username={username}
             />
             <Card.Content>
