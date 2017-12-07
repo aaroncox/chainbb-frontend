@@ -24,7 +24,7 @@ import ForumIndex from '../components/elements/forum/index'
 import ForumHeader from '../components/elements/forum/header'
 import ForumTitle from '../components/elements/forum/title'
 import Forum404 from '../components/elements/forum/404'
-import ForumPost from '../components/elements/forum/post'
+import ForumPosts from '../components/elements/forum/posts'
 import PostForm from './post/form'
 import PostFormHeader from '../components/elements/post/form/header'
 
@@ -345,19 +345,15 @@ class Forum extends React.Component {
             if(topics.length > 0) {
               display = (
                 <div>
-                    <ForumHeader />
-                    {topics.map((topic, idx) => (
-                      <ForumPost
-                        account={account}
-                        actions={this.props.actions}
-                        changeFilter={this.changeFilter.bind(this)}
-                        forum={forum}
-                        key={idx}
-                        moderation={this.props.moderation}
-                        topic={topic}
-                        removeTopic={this.removeTopic.bind(this)}
-                      />
-                    ))}
+                    <ForumPosts
+                      account={account}
+                      actions={this.props.actions}
+                      changeFilter={this.changeFilter.bind(this)}
+                      forum={forum}
+                      moderation={this.props.moderation}
+                      topics={topics}
+                      removeTopic={this.removeTopic.bind(this)}
+                    />
                 </div>
               )
             } else if(this.state.loadingPosts) {
