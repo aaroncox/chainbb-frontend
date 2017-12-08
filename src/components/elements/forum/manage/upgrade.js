@@ -12,6 +12,7 @@ export default class ForumUpgrade extends React.Component {
         const { current, next, split } = target.progression
         const share = split / 100
         const history = (funding) ? funding.history : []
+        const percent = Math.round(target.progression.progress / target.progression.required * 10000) / 100
         return(
             <div>
                 <Segment padded attached='top' secondary color='blue'>
@@ -27,13 +28,13 @@ export default class ForumUpgrade extends React.Component {
                         <Grid.Row columns={2}>
                             <Grid.Column>
                                 <Header>
-                                    Progress
+                                    Level {target.progression.level} - {share}% Beneficiaries
                                     <Header.Subheader>
-                                        Current progress towards the next upgrade.
+                                        Progressed {percent}% towards level {(target.progression.level+1)}.
                                     </Header.Subheader>
                                 </Header>
                                 <Divider hidden />
-                                <ForumUpgradeMeter target={target} columns={2} />
+                                <ForumUpgradeMeter target={target} percent={percent} columns={2} />
                             </Grid.Column>
                             <Grid.Column>
                                 <Table definition size='small'>
