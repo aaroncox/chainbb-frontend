@@ -59,6 +59,7 @@ export default ({large = true, highQualityPost = true, noImage = false, sanitize
         pre: ['class'],
         code: ['class'],
     },
+    allowedSchemes: [ 'http', 'https', 'steem' ],
     transformTags: {
         iframe: (tagName, attribs) => {
             const srcAtty = attribs.src;
