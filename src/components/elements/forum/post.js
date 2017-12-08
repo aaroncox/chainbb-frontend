@@ -35,6 +35,10 @@ export default class ForumPost extends React.Component {
     let { account, forum, moderation, topic } = this.props
     return (
       <ForumPostText
+        onMouseEnter={this.onMouseEnter.bind(this)}
+        onMouseLeave={this.onMouseLeave.bind(this)}
+        onOpen={this.onOpen.bind(this)}
+        onClose={this.onClose.bind(this)}
         state={this.state}
         {... this.props}
       />

@@ -71,8 +71,8 @@ export default class ForumPostText extends React.Component {
           forum={forum}
           moderation={moderation}
           topic={topic}
-          onOpen={this.onOpen.bind(this)}
-          onClose={this.onClose.bind(this)}
+          onOpen={this.props.onOpen}
+          onClose={this.props.onClose}
           removeTopic={this.props.removeTopic}
         />
       )
@@ -81,8 +81,8 @@ export default class ForumPostText extends React.Component {
       <Segment
         attached
         key={topic._id}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
         tertiary={moderatorRemoved}
       >
         <Grid>
