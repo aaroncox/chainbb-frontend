@@ -146,7 +146,7 @@ export default function post(state = initialState, action) {
 function setError(state, response) {
   let errors = state.processing.errors,
       id = response.payload.author + '/' + response.payload.permlink
-  errors[id] = response.error.payload.error.data.stack[0].format.split(": ")[1]
+  errors[id] = response.error.data.stack[0].format.split(": ")[1]
   return errors
 }
 
