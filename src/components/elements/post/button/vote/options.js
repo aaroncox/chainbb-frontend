@@ -71,7 +71,7 @@ export default class VoteButtonOptions extends React.Component {
     const { recent_claims, reward_balance, sbd_median_price } = status.network
     if(account.data) {
       const voting_power = account.data.voting_power
-      const total_vests = parseFloat(account.data.vesting_shares.split(" ")[0]) + parseFloat(account.data.received_vesting_shares.split(" ")[0])
+      const total_vests = parseFloat(account.data.vesting_shares.split(" ")[0]) + parseFloat(account.data.received_vesting_shares.split(" ")[0]) - parseFloat(account.data.delegated_vesting_shares.split(" ")[0])
       const sp = this.vests_to_sp(total_vests)
       const vote_pct = this.state.weight * 100
       const rshares = this.vests_to_rshares(sp, voting_power, vote_pct)
@@ -111,7 +111,7 @@ export default class VoteButtonOptions extends React.Component {
                   fluid
                   name='weight'
                   className='ui fluid labeled input'
-                  label='Vote Power'
+                  label='Vote %'
                   value={this.state.weight}
                   onChange={this.handleManualChange}
                   onBlur={this.handleBlur}
