@@ -214,6 +214,10 @@
   content: normal;
 }
 
+.thread-post .chainbb-footer {
+  display: none;
+}
+
 /*
 
 github.com style (c) Vasily Polovnyov <vast@whiteants.net>

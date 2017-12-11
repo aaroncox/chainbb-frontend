@@ -333,9 +333,9 @@ export function submit(account, data, parent, action = 'post') {
     const ops = []
     // Set our post data
     const author = account.name
-    const body = data.body
     const namespace = (data.existingPost) ? data.existingPost.namespace : data.namespace
     const title = (data.title) ? data.title : ''
+    let body = data.body
     const permlink = (data.existingPost) ? data.existingPost.permlink : generatePermlink(title, parent) // Prevent editing
     const parent_author = (data.existingPost) ? data.existingPost.parent_author : (parent) ? parent.author : ''
     const parent_permlink = (data.existingPost) ? data.existingPost.parent_permlink : (parent) ? parent.permlink : data.category
@@ -375,6 +375,10 @@ export function submit(account, data, parent, action = 'post') {
     })
     // Sort the beneficiaries alphabetically
     beneficiaries = _.sortBy(beneficiaries, 'account');
+    // If this is a root post, append the post footer to the post
+    if(!parent) {
+      body += `<div class="chainbb-footer"><hr><em><small><a href="https://chainbb.com/${data.category}/@${author}/${permlink}">Originally posted</a> in the <a href="https://chainbb.com/f/${namespace}">/f/${namespace}</a> forum on <a href="https://chainbb.com">chainBB.com</a> (<a href="https://chainbb.com/chainbb/@jesta/chainbb-frequently-asked-questions-faq">learn more</a>).</small></em></div>`
+    }
     // Build the comment operation
     ops.push(['comment', { author, body, json_metadata, parent_author, parent_permlink, permlink, title }])
     // If this is not an edit, add the comment options
