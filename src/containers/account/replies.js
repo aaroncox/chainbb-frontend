@@ -39,7 +39,7 @@ class Replies extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { post } = nextProps
     const user = nextProps.account.name || false
-    if(nextProps.account && this.props.account.name !== user) {
+    if(user && nextProps.account && this.props.account.name !== user) {
       this.props.actions.fetchPostRepliesByAuthor(user);
       this.setState({user})
     }
@@ -58,6 +58,7 @@ class Replies extends React.Component {
   }
   render() {
     const { totalReplies } = this.state
+    const { account } = this.props
     let content = <Segment attached padded='very' loading style={{margin: '2em 0'}} />
     let { loaded, replies } = this.state
     if(replies && totalReplies > 0) {
@@ -82,6 +83,19 @@ class Replies extends React.Component {
                     No posts found
                     <Header.Subheader>
                         There are no replies to any of your posts.
+                    </Header.Subheader>
+                </Header>
+            </Segment>
+        )
+    }
+    if(!account.isUser) {
+        content = (
+            <Segment attached textAlign='center' padded='very' style={{margin: '2em 0'}}>
+                <Header as='h2' icon>
+                    <Icon name='warning sign' />
+                    You must be logged in.
+                    <Header.Subheader>
+                        This page loads the replies of the logged in account.
                     </Header.Subheader>
                 </Header>
             </Segment>
