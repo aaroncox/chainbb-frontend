@@ -334,7 +334,7 @@ export function submit(account, data, parent, action = 'post') {
     // Set our post data
     const author = account.name
     const body = data.body
-    const namespace = data.namespace
+    const namespace = (data.existingPost) ? data.existingPost.namespace : data.namespace
     const title = (data.title) ? data.title : ''
     const permlink = (data.existingPost) ? data.existingPost.permlink : generatePermlink(title, parent) // Prevent editing
     const parent_author = (data.existingPost) ? data.existingPost.parent_author : (parent) ? parent.author : ''
