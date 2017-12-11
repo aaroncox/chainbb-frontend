@@ -1,5 +1,6 @@
 import steem from 'steem'
 import slug from 'slug'
+import _ from 'lodash'
 
 import * as types from './actionTypes';
 import * as BreadcrumbActions from './breadcrumbActions';
@@ -372,6 +373,8 @@ export function submit(account, data, parent, action = 'post') {
         beneficiaries.push({account, weight})
       }
     })
+    // Sort the beneficiaries alphabetically
+    beneficiaries = _.sortBy(beneficiaries, 'account');
     // Build the comment operation
     ops.push(['comment', { author, body, json_metadata, parent_author, parent_permlink, permlink, title }])
     // If this is not an edit, add the comment options
