@@ -1,16 +1,8 @@
 import React from 'react';
-import { Grid, Header, Icon, Segment } from 'semantic-ui-react'
-import TimeAgo from 'react-timeago'
-import { Link } from 'react-router-dom'
 import slug from 'slug'
 
-import AccountAvatar from '../account/avatar'
-import AccountLink from '../account/link'
-import Paginator from './post/paginator'
-import ForumPostModeration from './post/moderation'
-import PlatformLink from '../../../utils/link/platform'
 import ForumPostText from './post/types/text'
-import ForumPostThumbnail from './post/types/thumbnail'
+// import ForumPostThumbnail from './post/types/thumbnail'
 
 export default class ForumPost extends React.Component {
   constructor(props) {
@@ -32,7 +24,6 @@ export default class ForumPost extends React.Component {
       this.props.changeFilter(tag)
   }
   render() {
-    let { account, forum, moderation, topic } = this.props
     return (
       <ForumPostText
         onMouseEnter={this.onMouseEnter.bind(this)}

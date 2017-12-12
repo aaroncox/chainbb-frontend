@@ -3,7 +3,6 @@ import React from 'react';
 import { Button, Container, Grid, Modal } from 'semantic-ui-react'
 
 import PostContent from '../content'
-import PostSidebar from '../sidebar'
 
 export default class PostPreview extends React.Component {
 

@@ -8,7 +8,6 @@ import Noty from 'noty';
 
 import {
     Button,
-    Divider,
     Header,
     Popup,
     Segment
@@ -19,8 +18,6 @@ import MarkdownViewer from '../../../../utils/MarkdownViewer';
 import PostControls from '../controls'
 import PostForm from '../../../../containers/post/form'
 import PostFormHeader from '../form/header'
-import UserAvatar from '../../account/avatar'
-import AccountLink from '../../account/link'
 
 export default class PostReplyContent extends React.Component {
 

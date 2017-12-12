@@ -9,8 +9,6 @@ import PostControls from './controls'
 
 import PostForm from '../../../containers/post/form'
 import PostFormHeader from './form/header'
-import UserAvatar from '../account/avatar'
-import AccountLink from '../account/link'
 import PostTitle from './title'
 
 export default class PostContent extends React.Component {
