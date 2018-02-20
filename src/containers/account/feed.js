@@ -9,8 +9,8 @@ import { Button, Dimmer, Loader, Grid, Header, Segment  } from 'semantic-ui-reac
 
 import * as accountActions from '../../actions/accountActions'
 import * as breadcrumbActions from '../../actions/breadcrumbActions'
+import * as chainstateActions from '../../actions/chainstateActions'
 import * as postActions from '../../actions/postActions'
-import * as stateActions from '../../actions/stateActions'
 import * as statusActions from '../../actions/statusActions'
 import * as preferenceActions from '../../actions/preferenceActions'
 
@@ -35,9 +35,9 @@ class Feed extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      if(nextProps.state) {
-        if(nextProps.state.content) {
-          const content = nextProps.state.content;
+      if(nextProps.chainstate) {
+        if(nextProps.chainstate.content) {
+          const content = nextProps.chainstate.content;
           let { items, ids } = this.state;
           Object.keys(content).map(function(id, idx) {
             if(ids.indexOf(id) === -1) {
@@ -153,7 +153,7 @@ function mapStateToProps(state, ownProps) {
   return {
     account: state.account,
     preferences: state.preferences,
-    state: state.state,
+    chainstate: state.chainstate,
     status: state.status
   }
 }
@@ -163,7 +163,7 @@ function mapDispatchToProps(dispatch) {
     ...accountActions,
     ...breadcrumbActions,
     ...postActions,
-    ...stateActions,
+    ...chainstateActions,
     ...statusActions,
     ...preferenceActions
   }, dispatch)}

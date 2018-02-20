@@ -14,6 +14,7 @@ export default class AccountSidebar extends React.Component {
     props.actions.getState("@" + username);
   }
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
     const { username } = nextProps.match.params;
     if(username !== this.state.username) {
       this.setState({username});
@@ -23,7 +24,7 @@ export default class AccountSidebar extends React.Component {
   render() {
     const { username } = this.state;
     let sidebar = <Segment padded="very" loading />
-    if(this.props.state && this.props.state.accounts && this.props.state.accounts[username]) {
+    if(this.props.chainstate && this.props.chainstate.paths && this.props.chainstate.paths['@' + username]) {
       sidebar = <AccountSidebarInfo {...this.props} />
     }
     return (

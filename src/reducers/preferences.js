@@ -8,18 +8,9 @@ const initialPreferences = {
 }
 
 export default function preferences(state = false, action) {
-  // Load from localStorage as default, or initialPreferences
-  if(state === false) {
-    let prefs = store.get('preferences')
-    if(!prefs) {
-      prefs = initialPreferences
-    }
-    return Object.assign({}, state, prefs)
-  }
   switch(action.type) {
     case types.SET_PREFERENCE:
       let newState = Object.assign({}, state, action.payload)
-      store.set('preferences', newState)
       return newState
     default:
       return state

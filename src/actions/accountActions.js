@@ -3,6 +3,9 @@ import steem from 'steem'
 import store from 'store'
 import Noty from 'noty'
 
+import * as AccountsActions from './accountsActions'
+import * as chainstateActions from './chainstateActions'
+
 export function claimRewards(params) {
   return (dispatch: () => void) => {
     const { account, reward_steem, reward_sbd, reward_vests } = params;
@@ -21,7 +24,7 @@ export function claimRewards(params) {
     }, {
       posting: key
     }, (err, result) => {
-      dispatch(fetchAccount());
+      dispatch(chainstateActions.getAccounts([name]));
       new Noty({
         closeWith: ['click', 'button'],
         layout: 'topRight',
@@ -88,16 +91,26 @@ export function fetchAccountResolved(payload) {
 }
 
 export function signoutAccount() {
-  return {type: types.ACCOUNT_SIGNOUT}
+  return (dispatch: () => void) => {
+    dispatch(AccountsActions.removeAccounts())
+    dispatch({
+      type: types.ACCOUNT_SIGNOUT
+    })
+  }
 }
 
-export function signinAccount(account, key, data) {
-  let payload = {
-    account: account,
-    key: key,
-    data: data
+export function signinAccount(account, key) {
+  return (dispatch: () => void) => {
+    let payload = {
+      account: account,
+      key: key,
+    }
+    dispatch(AccountsActions.addAccount(account, key))
+    dispatch({
+      type: types.ACCOUNT_SIGNIN,
+      payload: payload
+    })
   }
-  return {type: types.ACCOUNT_SIGNIN, payload: payload}
 }
 
 export function follow(payload) {

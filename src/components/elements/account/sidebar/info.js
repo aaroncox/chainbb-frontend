@@ -8,7 +8,7 @@ import NumericLabel from '../../../../utils/NumericLabel'
 export default class AccountSidebarInfo extends React.Component {
   render() {
     const { username } = this.props.match.params,
-          account = this.props.state.accounts[username],
+          account = this.props.chainstate.paths['@' + username].accounts[username],
           numberFormat = {
             shortFormat: true,
             shortFormatMinValue: 1000

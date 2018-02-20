@@ -6,20 +6,22 @@ import { connect } from 'react-redux'
 import { Grid } from 'semantic-ui-react'
 import { goToTop } from 'react-scrollable-anchor'
 
-import * as accountActions from '../actions/accountActions'
-import * as breadcrumbActions from '../actions/breadcrumbActions'
+import * as accountActions from '../../actions/accountActions'
+import * as breadcrumbActions from '../../actions/breadcrumbActions'
 import * as chainstateActions from '../actions/chainstateActions'
-import * as postActions from '../actions/postActions'
-import * as preferenceActions from '../actions/preferenceActions'
-import * as statusActions from '../actions/statusActions'
+import * as postActions from '../../actions/postActions'
+import * as preferenceActions from '../../actions/preferenceActions'
+import * as stateActions from '../../actions/stateActions'
+import * as statusActions from '../../actions/statusActions'
 
-import AccountSidebar from '../components/elements/account/sidebar'
-import AccountTabs from '../components/elements/account/tabs'
+import AccountSidebar from '../../components/elements/account/sidebar'
+import AccountTabs from '../../components/elements/account/tabs'
 
-class Account extends React.Component {
+class AccountView extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(props)
     goToTop()
   }
 
@@ -63,6 +65,7 @@ function mapStateToProps(state, ownProps) {
     chainstate: state.chainstate,
     post: state.post,
     preferences: state.preferences,
+    state: state.state,
     status: state.status
   }
 }
@@ -74,8 +77,9 @@ function mapDispatchToProps(dispatch) {
     ...chainstateActions,
     ...postActions,
     ...preferenceActions,
+    ...stateActions,
     ...statusActions
   }, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Account);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountView);

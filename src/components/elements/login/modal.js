@@ -63,7 +63,7 @@ export default class LoginModal extends React.Component {
           }
         }
         if(isValidForAccount) {
-          t.props.actions.signinAccount(account, key, result[0])
+          t.props.actions.signinAccount(account, key)
           t.handleClose()
         } else {
           t.setState({
@@ -83,9 +83,25 @@ export default class LoginModal extends React.Component {
   }
 
   render() {
+    let {
+      buttonColor,
+      buttonFloated,
+      buttonFluid,
+      buttonIcon,
+      buttonText,
+    } = this.props
     let modal = (
       <Modal
-        trigger={<Button fluid onClick={this.handleOpen}>Sign-in</Button>}
+        trigger={(
+          <Button
+            fluid={buttonFluid}
+            color={buttonColor}
+            floated={buttonFloated}
+            content={buttonText || 'Sign-in'}
+            icon={buttonIcon}
+            onClick={this.handleOpen}
+          />
+        )}
         open={this.state.warningOpen}
         onOpen={this.open}
         onClose={this.close}

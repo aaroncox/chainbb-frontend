@@ -7,6 +7,7 @@ import steem from 'steem'
 import { Container } from 'semantic-ui-react'
 
 import Account from '../containers/account'
+import AccountsLayout from '../components/layouts/accounts'
 import IndexLayout from '../components/layouts/index'
 import FeedLayout from '../components/layouts/feed'
 import ForumLayout from '../components/layouts/forum'
@@ -56,6 +57,7 @@ const App = () => (
           {/* <Route exact path="/" component={IndexLayout} /> */}
           <Route exact path="/" render={(props) => <Redirect to="/forums"/>}/>
           <Route path="/@:username" component={Account} />
+          <Route path="/accounts" component={AccountsLayout} />
           <Route path="/create/forum" component={ForumCreateLayout} />
           <Route path="/feed" component={FeedLayout} />
           <Route path="/forums" component={ForumsLayout} />

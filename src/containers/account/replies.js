@@ -10,7 +10,6 @@ import * as accountActions from '../../actions/accountActions'
 import * as breadcrumbActions from '../../actions/breadcrumbActions'
 import * as postActions from '../../actions/postActions'
 import * as preferenceActions from '../../actions/preferenceActions'
-import * as stateActions from '../../actions/stateActions'
 import * as statusActions from '../../actions/statusActions'
 
 import ForumPostReply from '../../components/elements/forum/post/reply'
@@ -168,7 +167,6 @@ function mapStateToProps(state, ownProps) {
     account: state.account,
     post: state.post,
     preferences: state.preferences,
-    state: state.state,
     status: state.status
   }
 }
@@ -179,7 +177,6 @@ function mapDispatchToProps(dispatch) {
     ...breadcrumbActions,
     ...postActions,
     ...preferenceActions,
-    ...stateActions,
     ...statusActions
   }, dispatch)}
 }
