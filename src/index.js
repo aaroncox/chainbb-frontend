@@ -2,22 +2,24 @@ import 'core-js/fn/map'
 
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
+import { PersistGate } from 'redux-persist/lib/integration/react'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk';
+
 import App from './containers/app'
-import reducer from './reducers'
+import { configureStore } from './store';
+
+const { persistor, store } = configureStore()
 
 import './semantic/dist/semantic.min.css';
 import './index.css'
 
-const target = document.getElementById('root')
-const store = createStore(reducer, applyMiddleware(thunk))
-
 const node = (
   <Provider store={store}>
-    <App />
+    <PersistGate
+      persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 )
 
-render(node, target)
+render(node, document.getElementById('root'))
