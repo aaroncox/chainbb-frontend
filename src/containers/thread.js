@@ -68,7 +68,7 @@ class Thread extends React.Component {
 
   getPageForPost = (id) => {
     let collection = this.props.post.responses,
-        perPage = this.props.preferences.threadPostsPerPage,
+        perPage = this.props.preferences.threadPostsPerPage || 10,
         position = false
     for(var i = 0; i < collection.length; i++) {
       if(collection[i]['_id'] === id) {
@@ -151,7 +151,7 @@ class Thread extends React.Component {
 
   render() {
     let page = (this.state) ? this.state.page : 1,
-        perPage = this.props.preferences.threadPostsPerPage,
+        perPage = this.props.preferences.threadPostsPerPage || 10,
         responses = (this.props.post) ? this.props.post.responses : 0,
         content = (this.props.post) ? this.props.post.content : false,
         pages = Math.ceil(responses.length / perPage),
