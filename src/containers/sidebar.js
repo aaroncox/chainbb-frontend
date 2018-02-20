@@ -115,6 +115,10 @@ class Sidebar extends React.Component {
             <Icon name='inbox' />
             Inbox
           </Link>
+          {/* <Link className={`item ${(section && section === 'accounts') ? 'active' : ''}`} to={`/accounts`}>
+            <Icon name='users' />
+            Accounts
+          </Link> */}
         </Menu>
       )
     }
@@ -123,6 +127,10 @@ class Sidebar extends React.Component {
         {forumMenu}
         {userMenu}
         <Menu vertical fluid color='blue' size='small'>
+          <Link className={`item ${(section && section === 'index') ? 'active' : ''}`} to='/'>
+            <Icon name='list layout' />
+            Home
+          </Link>
           <Link className={`item ${(section && section === 'forums') ? 'active' : ''}`} to='/forums'>
             <Icon name='list layout' />
             All Forums

@@ -182,8 +182,8 @@ class Forums extends React.Component {
                     icon='users'
                     color='blue'
                     size='huge'
-                    content='Forum Index'
-                    subheader='A curated list of forum categories to get you started'
+                    content='Home'
+                    subheader='A curated list of community forums to get you started.'
                   />
                 </Grid.Column>
               </Grid.Row>
