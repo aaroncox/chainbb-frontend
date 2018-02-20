@@ -28,7 +28,7 @@ export default function forum(state = {last: null}, action) {
 
 export function setProgression(forum) {
     const { increment, steps } = GLOBAL.PROGRESSION
-    const initialCost = 10
+    const initialCost = 2
     if (!forum) return forum
     let { funded } = forum
     if (!funded) funded = 0

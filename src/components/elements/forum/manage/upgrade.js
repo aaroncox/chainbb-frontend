@@ -29,12 +29,26 @@ export default class ForumUpgrade extends React.Component {
                             <Grid.Column>
                                 <Header>
                                     Level {target.progression.level} - {share}% Beneficiaries
-                                    <Header.Subheader>
-                                        Progressed {percent}% towards level {(target.progression.level+1)}.
-                                    </Header.Subheader>
+                                    {(share < 4.5)
+                                      ? (
+                                        <Header.Subheader>
+                                            Progressed {percent}% towards level {(target.progression.level+1)}.
+                                        </Header.Subheader>
+                                      )
+                                      : (
+                                        <Header.Subheader>
+                                            Maximum beneficiaries achieved.
+                                        </Header.Subheader>
+                                      )
+                                    }
                                 </Header>
                                 <Divider hidden />
-                                <ForumUpgradeMeter target={target} percent={percent} columns={2} />
+                                {(share < 4.5)
+                                  ? (
+                                    <ForumUpgradeMeter target={target} percent={percent} columns={2} />
+                                  )
+                                  : ''
+                                }
                             </Grid.Column>
                             <Grid.Column>
                                 <Table definition size='small'>
@@ -49,14 +63,25 @@ export default class ForumUpgrade extends React.Component {
                                             <Table.Cell>Current Beneficiaries</Table.Cell>
                                             <Table.Cell>{share}%</Table.Cell>
                                         </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>Next Beneficiaries</Table.Cell>
-                                            <Table.Cell>{share + 0.25}%</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>Amount to Advance</Table.Cell>
-                                            <Table.Cell>{Math.round((next - current) * 1000)/1000} STEEM</Table.Cell>
-                                        </Table.Row>
+                                        {(share < 4.5)
+                                          ? (
+                                            <div>
+                                              <Table.Row>
+                                                  <Table.Cell>Next Beneficiaries</Table.Cell>
+                                                  <Table.Cell>{share + 0.25}%</Table.Cell>
+                                              </Table.Row>
+                                              <Table.Row>
+                                                  <Table.Cell>Amount to Advance</Table.Cell>
+                                                  <Table.Cell>{Math.round((next - current) * 1000)/1000} STEEM</Table.Cell>
+                                              </Table.Row>
+                                            </div>
+                                          )
+                                          : (
+                                            <Table.Row>
+                                                <Table.Cell>Amount to Advance</Table.Cell>
+                                                <Table.Cell>Maximum Reached</Table.Cell>
+                                            </Table.Row>
+                                          )}
                                     </Table.Body>
                                 </Table>
 
@@ -83,45 +108,53 @@ export default class ForumUpgrade extends React.Component {
                                     This system is still being established and at a point in the future, a system to decay/decrease rewards over time will also be introduced (to combat inactive forums and squatting). The goal isn't to punish or discourage forum operators, but to ensure the forums that exist here are contributing to the chainBB ecosystem.
                                 </p>
                             </Grid.Column>
-                            <Grid.Column width={6} verticalAlign='bottom'>
-                                <p>
-                                    To contribute to the upgrades of this forum, complete the following transfer.
-                                </p>
-                                <Table definition verticalAlign='top'>
-                                    <Table.Body>
-                                        <Table.Row>
-                                            <Table.Cell collapsing textAlign='right'>From</Table.Cell>
-                                            <Table.Cell>
-                                                (any account)
-                                            </Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell collapsing textAlign='right'>To</Table.Cell>
-                                            <Table.Cell>
-                                                <a href='https://steemd.com/@chainbb'>
-                                                    @chainbb
-                                                </a>
-                                            </Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell collapsing textAlign='right'>Amount</Table.Cell>
-                                            <Table.Cell>
-                                                (any amount)
-                                            </Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell collapsing textAlign='right'>Memo</Table.Cell>
-                                            <Table.Cell>
-                                                <Input type='text' value={`ns:${target._id}`} />
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    </Table.Body>
-                                </Table>
-                                <p>
-                                    <small>
-                                        <strong>Notice</strong>: Failure to specify the memo exactly as above will cause the transfer to fail.
-                                    </small>
-                                </p>
+                            <Grid.Column width={6} verticalAlign='top'>
+                              {(share < 4.5)
+                                ? (
+                                  <div>
+                                    <p>
+                                        To contribute to the upgrades of this forum, complete the following transfer.
+                                    </p>
+                                    <Table definition verticalAlign='top'>
+                                        <Table.Body>
+                                            <Table.Row>
+                                                <Table.Cell collapsing textAlign='right'>From</Table.Cell>
+                                                <Table.Cell>
+                                                    (any account)
+                                                </Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell collapsing textAlign='right'>To</Table.Cell>
+                                                <Table.Cell>
+                                                    <a href='https://steemd.com/@chainbb'>
+                                                        @chainbb
+                                                    </a>
+                                                </Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell collapsing textAlign='right'>Amount</Table.Cell>
+                                                <Table.Cell>
+                                                    (any amount)
+                                                </Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell collapsing textAlign='right'>Memo</Table.Cell>
+                                                <Table.Cell>
+                                                    <Input type='text' value={`ns:${target._id}`} />
+                                                </Table.Cell>
+                                            </Table.Row>
+                                        </Table.Body>
+                                    </Table>
+                                    <p>
+                                        <small>
+                                            <strong>Notice</strong>: Failure to specify the memo exactly as above will cause the transfer to fail.
+                                        </small>
+                                    </p>
+                                  </div>
+                                )
+                                : (
+                                  <div></div>
+                                )}
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

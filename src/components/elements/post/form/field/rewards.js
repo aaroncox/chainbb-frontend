@@ -54,7 +54,7 @@ export default class PostFormFieldRewards extends React.Component {
   }
   generateRow(type, account, isUser = false) {
     const { beneficiaries } = this.state
-    const authorPercent = 85
+    const authorPercent = 90
     let accountName = account
     let weightDisplay = <Table.Cell/>
     let controls = <Table.Cell/>
@@ -141,10 +141,10 @@ export default class PostFormFieldRewards extends React.Component {
     const { draft, forum, value } = this.props
     const errorLabel = <Label color="red" pointing/>
     let forum_percent = 0
-    let chainbb_percent = 15
+    let chainbb_percent = 5
     if(forum && forum.progression && forum.progression.split) {
         forum_percent = forum.progression.split / 100
-        chainbb_percent = 15 - forum_percent
+        chainbb_percent = 5 - forum_percent
     }
     return (
       <Grid stackable={true}>
@@ -260,7 +260,7 @@ export default class PostFormFieldRewards extends React.Component {
               </Table>
               <Header>
                 <Header.Subheader>
-                  The author recieves a total of 60% after all is calculated. 25% of the total is allocated to Curators by the Steem blockchain, as well as {forum_percent}% to the forum itself and {chainbb_percent}% to chainBB.
+                  The author rewards make up 70% of the total rewards generated. 25% is allocated to Curators by the Steem blockchain, as well as {forum_percent}% to the forum organizers and {chainbb_percent}% to chainBB.
                 </Header.Subheader>
                 <Header.Subheader>
                   <small>

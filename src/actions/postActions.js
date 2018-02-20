@@ -349,12 +349,12 @@ export function submit(account, data, parent, action = 'post') {
     const json_metadata = JSON.stringify(meta)
     // Predefined beneficiaries for the platform
     let beneficiaries = [
-      { "account": "chainbb", "weight": 1500 }
+      { "account": "chainbb", "weight": 500 }
     ]
     // If the forum is funded, add the creator as a beneficiary
     if (data.forum && data.forum.progression) {
         const target = data.forum
-        const chainbbPercent = 1500
+        const chainbbPercent = 500
         const ownerPercent = target.progression.split
         beneficiaries = [
             { "account": "chainbb", "weight": chainbbPercent - ownerPercent}
@@ -364,7 +364,7 @@ export function submit(account, data, parent, action = 'post') {
         }
     }
     // The percentage overall (after platform splits) that the user receives - should be dynamic in the future
-    const authorPercent = 85
+    const authorPercent = 95
     // Add additional beneficiaries as requested by the user
     Object.keys(data.beneficiaries).forEach((account) => {
       const requested = parseFloat(data.beneficiaries[account])

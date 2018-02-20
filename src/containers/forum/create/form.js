@@ -29,7 +29,7 @@ export default class ForumCreateForm extends React.Component {
                         <Message.Header>
                             This reservation <strong>will be valid for 1 hour</strong>.
                         </Message.Header>
-                        The initial hosting fee of <strong>10 STEEM</strong> must be sent within one hour or the reservation will be cancelled automatically.
+                        The initial hosting fee of <strong>2 STEEM</strong> must be sent within one hour or the reservation will be cancelled automatically.
                     </Message.Content>
                 </Message>
                 <Segment>

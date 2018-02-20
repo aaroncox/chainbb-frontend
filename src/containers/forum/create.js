@@ -31,7 +31,7 @@ class ForumCreate extends React.Component {
                         content='These forums are currently in beta and the information on this page is subject to change.'
                     />
                     <p style={{fontSize: '1.33em'}}>
-                        Forums have a <strong>10 STEEM</strong> initial creation fee. No other fees are required after this. The hosting and upgrade costs of the forum are increased by the beneficary rewards generated though activity within the forum itself.
+                        Forums have a <strong>2 STEEM</strong> initial creation fee. No other fees are required after this. The hosting and upgrade costs of the forum are increased by the beneficary rewards generated though activity within the forum itself.
                     </p>
                     <p>
                         To get started, make sure you are logged into the account that will be the forum owner and make a reservation using the button below.

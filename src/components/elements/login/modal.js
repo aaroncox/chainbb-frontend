@@ -130,7 +130,7 @@ export default class LoginModal extends React.Component {
             <Message>
               <Message.Header>Before you login, please note:</Message.Header>
               <Message.List>
-                <Message.Item>chainBB uses Steem&lsquo;s Post Beneficiaries feature at 15% of all posts. This reward is split between the users who operate the forums and the chainBB development team.</Message.Item>
+                <Message.Item>chainBB uses Steem&lsquo;s Post Beneficiaries feature at 5% of all posts. This reward is split between the users who operate the forums and the chainBB developers.</Message.Item>
                 <Message.Item>You can login to chainBB using your Steem posting key (WIF format, starts with the number 5). These keys are currently stored unencrypted in your browser and used for posting and voting.</Message.Item>
                 <Message.Item>chainBB is currently in <strong>BETA</strong> and may contain bugs.</Message.Item>
               </Message.List>

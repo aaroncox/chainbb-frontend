@@ -9,7 +9,7 @@ export default class ForumReservation extends React.Component {
         const { reservation, status } = this.props
         const { creator, expires, name, _id } = reservation
         const { sbd_median_price } = status.network
-        const forum_creation_cost = 10
+        const forum_creation_cost = 2
         return (
             <div>
                 <Segment padded attached>
