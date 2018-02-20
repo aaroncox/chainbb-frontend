@@ -36,8 +36,8 @@ class Feed extends React.Component {
 
     componentWillReceiveProps(nextProps) {
       if(nextProps.chainstate) {
-        if(nextProps.chainstate.content) {
-          const content = nextProps.chainstate.content;
+        if(nextProps.chainstate.paths[`/@${this.state.user}/feed`]) {
+          const content = nextProps.chainstate.paths[`/@${this.state.user}/feed`].content;
           let { items, ids } = this.state;
           Object.keys(content).map(function(id, idx) {
             if(ids.indexOf(id) === -1) {
