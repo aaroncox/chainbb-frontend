@@ -17,6 +17,11 @@ export default function account(state = false, action) {
         following: _.uniq(_.pull(existingFollowers, action.account))
       })
     }
+    case types.ACCOUNT_FETCH: {
+      return Object.assign({}, state, {
+        data: action.payload.data
+      })
+    }
     case types.ACCOUNT_SIGNOUT: {}
       return {
         isUser: false,

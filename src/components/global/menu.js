@@ -19,10 +19,10 @@ class HeaderMenu extends Component {
     hasBalance: false
   }
   componentDidMount() {
-    if (!this.props.account) {
-      this.props.actions.fetchAccount()
+    if (!this.props.account || !this.props.account.data) {
+      this.props.actions.fetchAccount(this.props.account.name)
     }
-    this.interval = setInterval(() => this.props.actions.fetchAccount(), 60000);
+    this.interval = setInterval(() => this.props.actions.fetchAccount(this.props.account.name), 60000);
   }
   componentWillUnmount() {
     clearInterval(this.interval);

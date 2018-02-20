@@ -38,12 +38,11 @@ export function claimRewards(params) {
   };
 }
 
-export function fetchAccount() {
+export function fetchAccount(account) {
   return dispatch => {
     let payload = {
-      isUser: (typeof store.get('account') !== 'undefined'),
-      name: store.get('account'),
-      key: store.get('key'),
+      isUser: (account !== 'undefined'),
+      name: account,
     }
     dispatch({
       type: types.ACCOUNT_FETCH,
