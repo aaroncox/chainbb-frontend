@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom'
 import { Button, Container, Dropdown, Grid, Header, Icon, Menu, Popup } from 'semantic-ui-react'
 
 import * as accountActions from '../../actions/accountActions'
+import * as accountsActions from '../../actions/accountsActions'
+import * as statusActions from '../../actions/statusActions'
+
 import LoginButton from '../elements/login/button'
 import LogoutItem from '../elements/login/logout'
-
 import AccountAvatar from '../elements/account/avatar'
-import * as statusActions from '../../actions/statusActions'
 
 class HeaderMenu extends Component {
   state = {
@@ -50,10 +51,11 @@ class HeaderMenu extends Component {
     this.props.actions.claimRewards({ account, reward_sbd, reward_steem, reward_vests });
   }
   vests_to_sp(vests){
-      return Math.round(vests / 1e6 * this.props.status.network.steem_per_mvests * 1000) / 1000
+    return Math.round(vests / 1e6 * this.props.status.network.steem_per_mvests * 1000) / 1000
   }
   render() {
-    const { data, loading, name } = this.props.account
+    const data = {}
+    const { loading, name } = this.props.account
     const { height } = this.props.status.network
     const { isClaiming, hasBalance } = this.state
     let avatar = false
@@ -97,7 +99,8 @@ class HeaderMenu extends Component {
       userItem = (
         <Dropdown style={{padding: '0 1.1em'}} item trigger={avatar} pointing='top right' icon={null} className='icon'>
           <Dropdown.Menu>
-            <Dropdown.Item as="a" href={`/@${name}`} icon="user" content={name} />
+            <Dropdown.Item as="a" href={`/@${name}`} icon="user" content="Profile" />
+            <Dropdown.Item as="a" href={`/accounts`} icon="users" content="Accounts" />
             <LogoutItem {...this.props} />
           </Dropdown.Menu>
         </Dropdown>
@@ -180,6 +183,7 @@ class HeaderMenu extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     account: state.account,
+    accounts: state.accounts,
     preferences: state.preferences,
     status: state.status
   }
@@ -188,6 +192,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {actions: bindActionCreators({
     ...accountActions,
+    ...accountsActions,
     ...statusActions
   }, dispatch)}
 }
