@@ -54,10 +54,11 @@ class HeaderMenu extends Component {
     return Math.round(vests / 1e6 * this.props.status.network.steem_per_mvests * 1000) / 1000
   }
   render() {
-    const data = {}
-    const { loading, name } = this.props.account
+    const { account } = this.props
+    const { loading, name } = account
     const { height } = this.props.status.network
     const { isClaiming, hasBalance } = this.state
+    let data = {}
     let avatar = false
     let pendingBalance = false
     let userItem = (
@@ -87,6 +88,9 @@ class HeaderMenu extends Component {
       />
     )
     if (name) {
+      if(account) {
+        data = account.data
+      }
       avatar = (
         <AccountAvatar
           className=""
@@ -129,17 +133,19 @@ class HeaderMenu extends Component {
                     </Grid.Row>
                     <Grid.Row columns={2}>
                         {hasBalance.map((field) => {
-                          const kind = field.split("_")[1]
-                          const amount = data[field].split(" ")[0]
-                          const value = (kind === 'vesting') ? this.vests_to_sp(amount) : amount
-                          const symbol = (kind === 'vesting') ? 'SP' : 'SBD'
-                          return (
-                              <Grid.Column key={symbol} textAlign='center'>
-                                    <Header color='green'>
-                                        +{value}{' '}<small>{symbol}</small>
-                                    </Header>
-                              </Grid.Column>
-                          )
+                          if(data[field]) {
+                            const kind = field.split("_")[1]
+                            const amount = data[field].split(" ")[0]
+                            const value = (kind === 'vesting') ? this.vests_to_sp(amount) : amount
+                            const symbol = (kind === 'vesting') ? 'SP' : 'SBD'
+                            return (
+                                <Grid.Column key={symbol} textAlign='center'>
+                                      <Header color='green'>
+                                          +{value}{' '}<small>{symbol}</small>
+                                      </Header>
+                                </Grid.Column>
+                            )
+                          }
                         })}
                     </Grid.Row>
                     <Grid.Row columns={1}>
