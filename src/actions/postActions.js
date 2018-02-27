@@ -355,7 +355,7 @@ export function submit(account, data, parent, action = 'post') {
     if (data.forum && data.forum.progression) {
         const target = data.forum
         const chainbbPercent = 500
-        const ownerPercent = target.progression.split
+        const ownerPercent = (target.progression) ? target.progression.split : 100
         beneficiaries = [
             { "account": "chainbb", "weight": chainbbPercent - ownerPercent}
         ]
