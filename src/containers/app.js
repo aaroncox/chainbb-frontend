@@ -8,6 +8,7 @@ import { Container } from 'semantic-ui-react'
 
 import Account from '../containers/account'
 import AccountsLayout from '../components/layouts/accounts'
+import DisabledLayout from '../components/layouts/disabled'
 import IndexLayout from '../components/layouts/index'
 import FeedLayout from '../components/layouts/feed'
 import ForumLayout from '../components/layouts/forum'
@@ -54,9 +55,9 @@ const App = () => (
         <BreadcrumbMenu />
         <GlobalNotice />
         <Container>
-          <Route exact path="/" component={IndexLayout} />
+          <Route path="/" component={DisabledLayout} />
           {/* <Route exact path="/" render={(props) => <Redirect to="/forums"/>}/> */}
-          <Route path="/@:username" component={Account} />
+          {/* <Route path="/@:username" component={Account} />
           <Route path="/accounts" component={AccountsLayout} />
           <Route path="/create/forum" component={ForumCreateLayout} />
           <Route path="/feed" component={FeedLayout} />
@@ -66,7 +67,7 @@ const App = () => (
           <Route path="/forum/:id" render={(props) => <Redirect to={`/f/${props.match.params.id}`}/>}/>
           <Route path="/replies" component={RepliesLayout} />
           <Route path="/topic/:category" component={TopicLayout} />
-          <Route path="/:category/@:author/:permlink/:action?" component={ThreadLayout} />
+          <Route path="/:category/@:author/:permlink/:action?" component={ThreadLayout} /> */}
         </Container>
         <BreadcrumbMenu />
         <FooterMenu />
